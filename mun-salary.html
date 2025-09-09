@@ -1670,6 +1670,37 @@
             });
         });
     </script>
-</body>
-</html>
+            const carouselScroller = document.querySelector('nav.fixed.bottom-0 div.overflow-x-auto');
+            function setActiveNav(id){
+                const targetId = id;
+                const all = allNavLinks;
+                let activeLink = null;
+                all.forEach(a=>{
+                    if(a.getAttribute('href') === '#'+targetId){ a.classList.add('active'); activeLink=a; }
+                    else a.classList.remove('active');
+                });
+                // Auto-scroll sólo en móvil
+                if(activeLink && window.innerWidth < 1024 && carouselScroller){
+                    // El contenedor real con scroll es carouselScroller
+                    const linkRect = activeLink.getBoundingClientRect();
+                    const scRect = carouselScroller.getBoundingClientRect();
+                    const margin = 24; // padding visual
+                    if(linkRect.left < scRect.left + margin || linkRect.right > scRect.right - margin){
+                        const desired = activeLink.offsetLeft - (carouselScroller.clientWidth/2 - activeLink.offsetWidth/2);
+                        carouselScroller.scrollTo({ left: Math.max(0, desired), behavior: 'smooth' });
+                    }
+                }
+            }
+            let lastActiveId = null;
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        const id = entry.target.id;
+                        if(id && id!==lastActiveId){
+                            lastActiveId = id;
+                            setActiveNav(id);
+                        }
+                    }
+                });
+            }, { root: null, rootMargin: '0px 0px -55% 0px', threshold: 0.35 });
 
