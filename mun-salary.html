@@ -1302,14 +1302,15 @@
             try {
                 const modal = document.getElementById('lang-welcome-modal');
                 const closeBtn = document.getElementById('lang-modal-close');
-                const saved = localStorage.getItem('mu_lang');
-                if(!saved){
+                const seen = localStorage.getItem('mu_lang_modal_seen');
+                const force = (()=>{ try { return new URLSearchParams(location.search).get('showLang')==='1'; } catch(_e){ return false; } })();
+                if(!seen || force){
                     modal.classList.remove('hidden');
-                    // prevenir scroll detrás
                     document.body.classList.add('overflow-hidden');
                 }
                 const applyChoice = (lang)=>{
                     try { localStorage.setItem('mu_lang', lang); } catch(_e){}
+                    try { localStorage.setItem('mu_lang_modal_seen','1'); } catch(_e){}
                     // Pequeño feedback visual
                     const btn = modal.querySelector(`[data-select-lang="${lang}"]`);
                     if(btn){ btn.classList.add('ring-2','ring-[#DA291C]'); }
@@ -1318,9 +1319,17 @@
                 modal.querySelectorAll('[data-select-lang]').forEach(btn=>{
                     btn.addEventListener('click', ()=> applyChoice(btn.getAttribute('data-select-lang')));
                 });
-                closeBtn?.addEventListener('click', ()=>{ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); });
+                closeBtn?.addEventListener('click', ()=>{ 
+                    try { localStorage.setItem('mu_lang_modal_seen','1'); } catch(_e){}
+                    modal.classList.add('hidden'); 
+                    document.body.classList.remove('overflow-hidden'); 
+                });
                 // ESC para cerrar si el usuario decide omitir (mantiene default actual)
-                document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !modal.classList.contains('hidden')){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }});
+                document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !modal.classList.contains('hidden')){ 
+                    try { localStorage.setItem('mu_lang_modal_seen','1'); } catch(_e){}
+                    modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }});
+                // Función debug para re-mostrar (usar en consola): resetLangModal()
+                window.resetLangModal = () => { try { localStorage.removeItem('mu_lang_modal_seen'); } catch(_e){} modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); };
             } catch(modalErr){ console.warn('Modal idioma error', modalErr); }
             // Scrollspy: resaltar sección activa en sidebar y carrusel móvil
             const sectionIds = ['filtros','balance','finanzas','evolucion','big6','posicion','estructura','operaciones','analisis','observaciones','glosario'];
