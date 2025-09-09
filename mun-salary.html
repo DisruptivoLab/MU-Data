@@ -1398,18 +1398,53 @@
                 }
             }
             let lastActiveId = null;
+            // Estrategia combinada: Observer para saber qué secciones están visibles + cálculo determinista basado en posición
+            const observerVisible = new Set();
+            function pickCurrentSection(){
+                // Offset para considerar cabecera visible antes de activarse
+                const activationOffset = 140; // px desde top viewport
+                let candidate = sectionIds[0];
+                for(const {id, el} of sectionMap){
+                    if(!el) continue;
+                    const rect = el.getBoundingClientRect();
+                    // Si la parte superior ya pasó el umbral de activación, avanzamos el candidato
+                    if(rect.top <= activationOffset) {
+                        candidate = id;
+                    } else {
+                        // Al encontrar la primera que aún no cruza el umbral, detenemos
+                        break;
+                    }
+                }
+                // Fallback: si nada ha cruzado, mantener la primera
+                if(candidate && candidate !== lastActiveId){
+                    lastActiveId = candidate;
+                    setActiveNav(candidate);
+                }
+            }
             const observer = new IntersectionObserver(entries => {
+                let needRecalc = false;
                 entries.forEach(entry => {
+                    const id = entry.target.id;
+                    if(!id) return;
                     if(entry.isIntersecting){
-                        const id = entry.target.id;
-                        if(id && id !== lastActiveId){
-                            lastActiveId = id;
-                            setActiveNav(id);
-                        }
+                        if(!observerVisible.has(id)){ observerVisible.add(id); needRecalc = true; }
+                    } else if(observerVisible.has(id)) {
+                        observerVisible.delete(id); needRecalc = true;
                     }
                 });
-            }, { root: null, rootMargin: '0px 0px -55% 0px', threshold: 0.35 });
+                if(needRecalc) pickCurrentSection();
+            }, { root: null, rootMargin: '0px 0px -40% 0px', threshold: [0, 0.1, 0.25, 0.5] });
             sectionMap.forEach(s => s.el && observer.observe(s.el));
+            // Scroll listener (throttled con rAF) para mayor precisión en transiciones largas
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if(!ticking){
+                    ticking = true;
+                    requestAnimationFrame(()=>{ pickCurrentSection(); ticking = false; });
+                }
+            }, { passive: true });
+            // Inicializar estado
+            pickCurrentSection();
 
             // Filtros fijos al hacer scroll
             const filtrosSection = document.getElementById('filtros');
