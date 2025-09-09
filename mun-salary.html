@@ -131,7 +131,7 @@
     .no-scrollbar { -ms-overflow-style: none; }
         /* Hero background con degradado + paneo horizontal suave */
         #hero { position: relative; overflow:hidden; }
-        #hero::before, #hero::after { content:""; position:absolute; inset:0; }
+    #hero::before, #hero::after { content:""; position:absolute; inset:0; }
         /* Capa imagen paneable */
         #hero::before {
             background-image: url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
@@ -143,9 +143,13 @@
         }
         /* Capa degradado por encima sin moverse */
         #hero::after {
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.62) 60%, rgba(0,0,0,0.78) 80%, #000 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0.82) 78%, #000 100%);
             pointer-events:none;
+            z-index:1;
         }
+        #hero .hero-inner { position:relative; z-index:2; }
+        #hero h1 { text-shadow:0 4px 22px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.6); }
+        #hero p { text-shadow:0 3px 14px rgba(0,0,0,0.65); }
         @keyframes heroPan {
             0% { transform: scale(1.08) translateX(-2.5%); }
             50% { transform: scale(1.1)  translateX(2.5%); }
@@ -173,7 +177,7 @@
         
         <!-- HERO PRINCIPAL -->
         <section id="hero" class="min-h-[70vh] flex flex-col justify-center items-center text-center mb-12 relative overflow-hidden px-1">
-            <div class="relative max-w-4xl mx-auto">
+            <div class="hero-inner relative max-w-4xl mx-auto">
                 <h1 class="md:text-5xl font-extrabold tracking-tight mb-4 mt-8">Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26</h1>
                 <p class="text-gray-300 leading-relaxed text-xs md:text-base mb-6">
                     Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class="text-white font-semibold">¿Cuánto se libera?</span>, <span class="text-white font-semibold">¿Dónde se reasigna?</span> y <span class="text-white font-semibold">¿Qué tan eficiente es la nueva estructura?</span>
