@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>404 – MU Data</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<style>
+ body{background:#000;color:#fff;font-family:Poppins,Arial,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:2rem;text-align:center}
+ a{color:#DA291C;text-decoration:none;font-weight:600}
+ a:hover{text-decoration:underline}
+ .code{font-size:5rem;font-weight:700;color:#DA291C;margin:0}
+ .fade{animation:fade .8s ease-in-out infinite alternate}
+ @keyframes fade{from{opacity:.4}to{opacity:1}}
+</style>
+</head>
+<body>
+  <h1 class="code">404</h1>
+  <p>Página no encontrada. Redirigiendo al dashboard…</p>
+  <p><a href="index.html">Ir ahora</a></p>
+  <script>
+    // Preserve hash fragment if existía en la URL original
+    (function(){
+      var h = window.location.hash;
+      setTimeout(function(){ window.location.replace('index.html'+h); }, 1200);
+    })();
+  </script>
+</body>
+</html>
