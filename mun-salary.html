@@ -129,13 +129,33 @@
         .sidebar-link:hover, .carousel-link:hover, .sidebar-link.active, .carousel-link.active { color: #fff !important; background: #222 !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; }
-        /* Hero background con imagen + degradado (versión estática) */
-        #hero {
-            position: relative;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.62) 60%, rgba(0,0,0,0.78) 80%, #000 100%), url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
+        /* Hero background con degradado + paneo horizontal suave */
+        #hero { position: relative; overflow:hidden; }
+        #hero::before, #hero::after { content:""; position:absolute; inset:0; }
+        /* Capa imagen paneable */
+        #hero::before {
+            background-image: url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
+            background-size: cover; background-repeat:no-repeat; background-position: center center;
+            transform: scale(1.08) translateX(0); /* ligero zoom para evitar bordes negros */
+            animation: heroPan 38s ease-in-out infinite alternate;
+            will-change: transform;
+            filter: brightness(0.92) saturate(1.05);
+        }
+        /* Capa degradado por encima sin moverse */
+        #hero::after {
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.62) 60%, rgba(0,0,0,0.78) 80%, #000 100%);
+            pointer-events:none;
+        }
+        @keyframes heroPan {
+            0% { transform: scale(1.08) translateX(-2.5%); }
+            50% { transform: scale(1.1)  translateX(2.5%); }
+            100% { transform: scale(1.08) translateX(-2.5%); }
+        }
+        @media (prefers-reduced-motion: reduce){
+            #hero::before { animation: none; transform: scale(1.05); }
+        }
+        @media (max-width:640px){
+            #hero::before { animation-duration: 26s; }
         }
         @media (max-width:640px){ #hero { background-position: center center; } }
         #hero h1 { text-shadow: 0 4px 18px rgba(0,0,0,0.55); }
