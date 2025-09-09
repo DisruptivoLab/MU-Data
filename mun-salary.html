@@ -129,18 +129,15 @@
         .sidebar-link:hover, .carousel-link:hover, .sidebar-link.active, .carousel-link.active { color: #fff !important; background: #222 !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; }
-        /* Hero background con imagen + degradado */
-    /* Hero con fallback de imagen y capa de video */
-    #hero { position: relative; background:#000 center/cover no-repeat url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg'); }
-    #hero .video-bg { position:absolute; inset:0; z-index:0; overflow:hidden; background:#000; }
-    #hero .video-bg img, #hero .video-bg iframe { width:100%; height:100%; object-fit:cover; display:block; }
-    #hero .video-bg .hero-fallback { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.92) saturate(1.05); transition:opacity .6s ease; }
-    #hero .video-bg .hero-video { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; opacity:0; transition:opacity .9s ease; }
-    #hero .video-bg.ready .hero-video { opacity:1; }
-    #hero .video-bg.ready .hero-fallback { opacity:0; }
-    #hero .video-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 55%, #000 92%); }
-    #hero .hero-inner { position:relative; z-index:2; }
-    @media (max-width:640px){ #hero .video-bg img{ filter:brightness(0.9) saturate(1.05); } }
+        /* Hero background con imagen + degradado (versión estática) */
+        #hero {
+            position: relative;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.62) 60%, rgba(0,0,0,0.78) 80%, #000 100%), url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+        }
+        @media (max-width:640px){ #hero { background-position: center center; } }
         #hero h1 { text-shadow: 0 4px 18px rgba(0,0,0,0.55); }
         #hero p, #hero li { text-shadow: 0 2px 10px rgba(0,0,0,0.45); }
     </style>
@@ -156,11 +153,7 @@
         
         <!-- HERO PRINCIPAL -->
         <section id="hero" class="min-h-[70vh] flex flex-col justify-center items-center text-center mb-12 relative overflow-hidden px-1">
-            <div class="video-bg" data-video-container>
-                <img class="hero-fallback" src="https://i.ytimg.com/vi/KUo-jEwQNmg/hqdefault.jpg" alt="Old Trafford" width="480" height="360" loading="lazy" referrerpolicy="no-referrer" />
-            </div>
-            <div class="video-overlay"></div>
-            <div class="hero-inner relative max-w-4xl mx-auto">
+            <div class="relative max-w-4xl mx-auto">
                 <h1 class="md:text-5xl font-extrabold tracking-tight mb-4 mt-8">Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26</h1>
                 <p class="text-gray-300 leading-relaxed text-xs md:text-base mb-6">
                     Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class="text-white font-semibold">¿Cuánto se libera?</span>, <span class="text-white font-semibold">¿Dónde se reasigna?</span> y <span class="text-white font-semibold">¿Qué tan eficiente es la nueva estructura?</span>
@@ -1306,48 +1299,7 @@
         }
 
     document.addEventListener('DOMContentLoaded', () => {
-            // Lazy load video hero (YouTube background) respetando reduced motion
-            (function(){
-                const VIDEO_ID = 'KUo-jEwQNmg';
-                const container = document.querySelector('[data-video-container]');
-                if(!container) return;
-                const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                const disable = prefersReduced || new URLSearchParams(location.search).get('noVideo')==='1';
-                const load = () => {
-                    if(disable || container.dataset.loaded) return;
-                    const iframe = document.createElement('iframe');
-                    iframe.className='hero-video';
-                    iframe.setAttribute('title','Hero Background');
-                    iframe.setAttribute('aria-hidden','true');
-                    iframe.setAttribute('tabindex','-1');
-                    iframe.loading = 'lazy';
-                    iframe.referrerPolicy='no-referrer';
-                    iframe.allow='autoplay; encrypted-media; picture-in-picture';
-                    iframe.src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&playsinline=1&controls=0&loop=1&playlist=${VIDEO_ID}&modestbranding=1&rel=0&enablejsapi=1`; 
-                    container.appendChild(iframe);
-                    container.dataset.loaded='1';
-                    let readyFired = false;
-                    const markReady = () => {
-                        if(readyFired) return; readyFired=true; container.classList.add('ready');
-                    };
-                    // load = iframe loaded (no garantía de primer frame) -> usar timeout breve
-                    iframe.addEventListener('load', () => { setTimeout(markReady, 200); });
-                    // Fallback absoluto: a los 3500ms asumimos listo
-                    setTimeout(markReady, 3500);
-                    // Si YouTube bloqueado, hero sigue mostrando fallback (no removemos img)
-                };
-                // fallback: si en 7s no se cargó video, mantener imagen (nada extra) y no reintentar
-                setTimeout(()=>{ if(!container.dataset.loaded && !disable){ /* se mantiene el thumbnail */ } },7000);
-                if(!disable){
-                    if('IntersectionObserver' in window){
-                        const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ load(); io.disconnect(); }}); },{threshold:0.2});
-                        io.observe(document.getElementById('hero'));
-                    } else {
-                        setTimeout(load, 1800);
-                    }
-                    ['scroll','pointerdown','keydown','touchstart'].forEach(ev=>window.addEventListener(ev, load, { once:true, passive:true }));
-                }
-            })();
+            // (Video hero eliminado, se usa fondo estático)
             // Modal selección idioma (primera visita)
             try {
                 const modal = document.getElementById('lang-welcome-modal');
