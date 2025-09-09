@@ -49,9 +49,44 @@
         .filter-btn { transition: all 0.2s ease-in-out; }
         .filter-btn.active { background-color: #DA291C; color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(218, 41, 28, 0.3); }
         .filter-btn:not(.active) { background-color: #2a2a2a; color: #ccc; }
+        /* Modal idioma */
+        .fade-in { animation: fadeIn 0.35s ease-out; }
+        @keyframes fadeIn { from { opacity:0; transform: translateY(8px);} to { opacity:1; transform: translateY(0);} }
+        .focus-ring:focus { outline:2px solid #DA291C; outline-offset:2px; }
     </style>
 </head>
 <body class="text-white">
+    <!-- MODAL SELECCIÓN IDIOMA (primera visita) -->
+    <div id="lang-welcome-modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="fade-in relative w-[92%] max-w-md bg-[#0d0d0d] border border-gray-700 rounded-2xl p-6 shadow-xl">
+            <button type="button" id="lang-modal-close" class="absolute top-2 right-2 text-gray-400 hover:text-white text-sm focus-ring" aria-label="Cerrar / Close">✕</button>
+            <div class="mb-5 text-center space-y-2">
+                <h2 class="text-xl font-bold tracking-tight">Selecciona tu idioma</h2>
+                <p class="text-gray-400 text-xs">Choose your language to personalise the dashboard.</p>
+            </div>
+            <div class="flex flex-col gap-3">
+                <button data-select-lang="es" class="lang-choice group w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-700 bg-black/40 hover:bg-black/70 transition focus-ring">
+                    <span class="text-2xl leading-none">🇪🇸</span>
+                    <span class="flex flex-col items-start">
+                        <span class="font-semibold text-base">Español</span>
+                        <span class="text-[11px] text-gray-400 group-hover:text-gray-300">Experiencia original (por defecto)</span>
+                    </span>
+                    <span class="ml-auto text-[10px] uppercase tracking-wide bg-gray-800 text-gray-300 px-2 py-1 rounded">ES</span>
+                </button>
+                <button data-select-lang="en" class="lang-choice group w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-700 bg-black/40 hover:bg-black/70 transition focus-ring">
+                    <span class="text-2xl leading-none">🇬🇧</span>
+                    <span class="flex flex-col items-start">
+                        <span class="font-semibold text-base">English</span>
+                        <span class="text-[11px] text-gray-400 group-hover:text-gray-300">Bilingual data experience</span>
+                    </span>
+                    <span class="ml-auto text-[10px] uppercase tracking-wide bg-gray-800 text-gray-300 px-2 py-1 rounded">EN</span>
+                </button>
+            </div>
+            <div class="mt-5 text-center">
+                <p class="text-[10px] text-gray-500">Podrás cambiar más tarde con el botón flotante.</p>
+            </div>
+        </div>
+    </div>
     <!-- SIDEBAR ESCRITORIO -->
     <div class="lg:flex lg:flex-row">
     <nav class="hidden lg:flex lg:flex-col lg:w-[15%] bg-black border-r border-gray-800 z-40 lg:fixed lg:top-0 lg:left-0 lg:h-screen lg:overflow-y-auto">
@@ -97,7 +132,7 @@
         /* Hero background con imagen + degradado */
         #hero {
             position: relative;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.623) 60%, rgba(0, 0, 0, 0.788) 80%, #000 100%), url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.603) 0%, rgba(0, 0, 0, 0.623) 60%, rgba(0, 0, 0, 0.788) 80%, #000 100%), url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -119,11 +154,11 @@
         <section id="hero" class="min-h-[70vh] flex flex-col justify-center items-center text-center mb-12 relative overflow-hidden px-1">
             <div class="relative max-w-4xl mx-auto">
                 <h1 class="md:text-5xl font-extrabold tracking-tight mb-4 mt-8">Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26</h1>
-                <p class="text-gray-300 leading-relaxed text-sm md:text-base mb-6">
+                <p class="text-gray-300 leading-relaxed text-xs md:text-base mb-6">
                     Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class="text-white font-semibold">¿Cuánto se libera?</span>, <span class="text-white font-semibold">¿Dónde se reasigna?</span> y <span class="text-white font-semibold">¿Qué tan eficiente es la nueva estructura?</span>
                 </p>
                 <div class="text-center ">
-                    <h3 class="text-sm font-semibold tracking-wide text-gray-200 mb-2">Pedes filtrar por temporada</h3>
+                    <h3 class="text-xs font-semibold tracking-wide text-gray-200 mb-2">Pedes filtrar por temporada</h3>
                     <p class="mt-3 text-xs md:text-sm text-gray-400 italic">Sugerencia: examina primero el modo Total para captar el marco global y luego alterna cada campaña para analizar profundidad y secuencia.</p>
                 </div>
             </div>
@@ -1263,6 +1298,30 @@
         }
 
     document.addEventListener('DOMContentLoaded', () => {
+            // Modal selección idioma (primera visita)
+            try {
+                const modal = document.getElementById('lang-welcome-modal');
+                const closeBtn = document.getElementById('lang-modal-close');
+                const saved = localStorage.getItem('mu_lang');
+                if(!saved){
+                    modal.classList.remove('hidden');
+                    // prevenir scroll detrás
+                    document.body.classList.add('overflow-hidden');
+                }
+                const applyChoice = (lang)=>{
+                    try { localStorage.setItem('mu_lang', lang); } catch(_e){}
+                    // Pequeño feedback visual
+                    const btn = modal.querySelector(`[data-select-lang="${lang}"]`);
+                    if(btn){ btn.classList.add('ring-2','ring-[#DA291C]'); }
+                    setTimeout(()=>{ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); if(window.currentLang!==lang){ window.currentLang=lang; location.reload(); } }, 250);
+                };
+                modal.querySelectorAll('[data-select-lang]').forEach(btn=>{
+                    btn.addEventListener('click', ()=> applyChoice(btn.getAttribute('data-select-lang')));
+                });
+                closeBtn?.addEventListener('click', ()=>{ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); });
+                // ESC para cerrar si el usuario decide omitir (mantiene default actual)
+                document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !modal.classList.contains('hidden')){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }});
+            } catch(modalErr){ console.warn('Modal idioma error', modalErr); }
             // Scrollspy: resaltar sección activa en sidebar y carrusel móvil
             const sectionIds = ['filtros','balance','finanzas','evolucion','big6','posicion','estructura','operaciones','analisis','observaciones','glosario'];
             const sidebarLinks = Array.from(document.querySelectorAll('.sidebar-link'));
