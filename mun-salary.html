@@ -102,7 +102,6 @@
     <nav class="hidden lg:flex lg:flex-col lg:w-[15%] bg-black border-r border-gray-800 z-40 lg:fixed lg:top-0 lg:left-0 lg:h-screen lg:overflow-y-auto">
         <div class="flex flex-col h-full py-8 px-4 gap-3">
             <a href="#top" class="text-2xl font-bold mu-red mb-6 hover:text-white transition leading-tight"><span class="block">MU Data</span><span class="block text-xl font-normal tracking-wide text-white" data-brand-salarios>Salarios</span></a>
-            <a href="#filtros" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Filtros</a>
             <a href="#balance" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Balance General</a>
             <a href="#finanzas" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Finanzas</a>
             <a href="#evolucion" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Evolución</a>
@@ -120,7 +119,6 @@
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-black border-t border-gray-800 flex lg:hidden overflow-x-auto no-scrollbar">
         <div class="flex flex-row gap-2 w-full px-2 py-2 overflow-x-auto">
             <a href="#top" class="carousel-link font-bold px-3 py-2 rounded hover:text-white transition whitespace-nowrap" data-top-link>Top</a>
-            <a href="#filtros" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Filtros</a>
             <a href="#balance" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Balance</a>
             <a href="#finanzas" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Finanzas</a>
             <a href="#evolucion" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Evolución</a>
@@ -1370,7 +1368,7 @@
                 window.resetLangModal = () => { try { localStorage.removeItem('mu_lang_modal_seen'); } catch(_e){} modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); };
             } catch(modalErr){ console.warn('Modal idioma error', modalErr); }
             // Scrollspy: resaltar sección activa en sidebar y carrusel móvil
-            const sectionIds = ['filtros','balance','finanzas','evolucion','big6','posicion','estructura','operaciones','analisis','observaciones','glosario'];
+            const sectionIds = ['balance','finanzas','evolucion','big6','posicion','estructura','operaciones','analisis','observaciones','glosario'];
             const sidebarLinks = Array.from(document.querySelectorAll('.sidebar-link'));
             const carouselLinks = Array.from(document.querySelectorAll('.carousel-link'));
             const allNavLinks = [...sidebarLinks, ...carouselLinks];
