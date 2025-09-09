@@ -116,8 +116,8 @@
         </div>
     </nav>
     <!-- MENU CARRUSEL MOVIL -->
-    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-black border-t border-gray-800 flex lg:hidden overflow-x-auto no-scrollbar">
-        <div class="flex flex-row gap-2 w-full px-2 py-2 overflow-x-auto">
+    <nav id="mobile-nav" class="fixed bottom-0 left-0 right-0 z-40 bg-black border-t border-gray-800 flex lg:hidden overflow-x-auto no-scrollbar">
+    <div class="flex flex-row gap-2 px-2 py-2 min-w-max">
             <a href="#top" class="carousel-link font-bold px-3 py-2 rounded hover:text-white transition whitespace-nowrap" data-top-link>Top</a>
             <a href="#balance" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Balance</a>
             <a href="#finanzas" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Finanzas</a>
@@ -1374,7 +1374,7 @@
             const allNavLinks = [...sidebarLinks, ...carouselLinks];
             const sectionMap = sectionIds.map(id => ({ id, el: document.getElementById(id) }));
             // Nuevo scrollspy combinado con auto-centering del carrusel móvil
-            const carouselScroller = document.querySelector('nav.fixed.bottom-0 div.overflow-x-auto');
+            const carouselScroller = document.getElementById('mobile-nav');
             function setActiveNav(id){
                 const targetId = id;
                 let activeLink = null;
