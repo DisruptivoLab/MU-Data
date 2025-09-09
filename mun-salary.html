@@ -130,10 +130,12 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; }
         /* Hero background con imagen + degradado */
-    #hero { position: relative; background:#000; }
-    #hero .video-bg { position:absolute; inset:0; z-index:-2; overflow:hidden; background:#000; }
+    /* Hero con fallback de imagen y capa de video */
+    #hero { position: relative; background:#000 center/cover no-repeat url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg'); }
+    #hero .video-bg { position:absolute; inset:0; z-index:0; overflow:hidden; background:#000; }
     #hero .video-bg img, #hero .video-bg iframe { width:100%; height:100%; object-fit:cover; display:block; }
-    #hero .video-overlay { position:absolute; inset:0; z-index:-1; background:linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 55%, #000 92%); }
+    #hero .video-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 55%, #000 92%); }
+    #hero .hero-inner { position:relative; z-index:2; }
     @media (max-width:640px){ #hero .video-bg img{ filter:brightness(0.9) saturate(1.05); } }
         #hero h1 { text-shadow: 0 4px 18px rgba(0,0,0,0.55); }
         #hero p, #hero li { text-shadow: 0 2px 10px rgba(0,0,0,0.45); }
@@ -154,7 +156,7 @@
                 <img src="https://i.ytimg.com/vi/KUo-jEwQNmg/hqdefault.jpg" alt="Old Trafford" width="480" height="360" loading="lazy" referrerpolicy="no-referrer" />
             </div>
             <div class="video-overlay"></div>
-            <div class="relative max-w-4xl mx-auto">
+            <div class="hero-inner relative max-w-4xl mx-auto">
                 <h1 class="md:text-5xl font-extrabold tracking-tight mb-4 mt-8">Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26</h1>
                 <p class="text-gray-300 leading-relaxed text-xs md:text-base mb-6">
                     Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class="text-white font-semibold">¿Cuánto se libera?</span>, <span class="text-white font-semibold">¿Dónde se reasigna?</span> y <span class="text-white font-semibold">¿Qué tan eficiente es la nueva estructura?</span>
@@ -1316,11 +1318,19 @@
                     iframe.loading = 'lazy';
                     iframe.referrerPolicy='no-referrer';
                     iframe.allow='autoplay; encrypted-media; picture-in-picture';
+                    iframe.style.opacity='0';
+                    iframe.style.transition='opacity .8s ease';
                     iframe.src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&playsinline=1&controls=0&loop=1&playlist=${VIDEO_ID}&modestbranding=1&rel=0&enablejsapi=1`; 
                     container.innerHTML='';
                     container.appendChild(iframe);
                     container.dataset.loaded='1';
+                    const fadeIn = () => { requestAnimationFrame(()=> iframe.style.opacity='1'); };
+                    iframe.addEventListener('load', fadeIn);
+                    // fallback de fade-in a los 3s si load no dispara (algunos bloqueadores)
+                    setTimeout(()=>{ if(iframe.style.opacity==='0') fadeIn(); },3000);
                 };
+                // fallback: si en 7s no se cargó video, mantener imagen (nada extra) y no reintentar
+                setTimeout(()=>{ if(!container.dataset.loaded && !disable){ /* se mantiene el thumbnail */ } },7000);
                 if(!disable){
                     if('IntersectionObserver' in window){
                         const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ load(); io.disconnect(); }}); },{threshold:0.2});
