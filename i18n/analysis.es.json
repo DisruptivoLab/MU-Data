@@ -1,0 +1,35 @@
+{
+  "all": {
+    "title": "Análisis Integrado de Reestructuración Salarial",
+    "intro": "Resumen ejecutivo basado en la agregación de todas las operaciones (salidas y fichajes) desde el inicio del ciclo de reingeniería salarial 2024–2026.",
+    "sections": [
+      {"key":"volumen","header":"1. Volumen y Dirección del Flujo","tpl":"Se registran {{countSalidas}} salidas y {{countLlegadas}} incorporaciones. El ahorro bruto semanal alcanza {{totalAhorro}} frente a una reinversión de {{totalGasto}}, generando un saldo neto de {{balanceFmt}}."},
+      {"key":"mixPos","header":"2. Mix Posicional y Redistribución","tpl":"La mayor liberación proviene de {{posTopRelease}}, mientras la reinversión relativa se concentra en {{posTopInvest}}. El patrón sugiere reasignación desde activos maduros hacia unidades ofensivas y de construcción de juego."},
+      {"key":"eficiencia","header":"3. Eficiencia Media de Operaciones","tpl":"El ahorro medio por salida es {{avgAhorro}}; el salario medio de fichajes se sitúa en {{avgGasto}}. La relación ahorro/gasto se mantiene en {{ratioAG}}, indicando disciplina en la curva salarial de entrada."},
+      {"key":"estructura","header":"4. Estructura de Tramos Salariales","tpl":"El recorte impacta especialmente el estrato Élite (>£200k), reduciendo dependencia de contratos rígidos. La reposición se canaliza hacia capas Clave y Equipo, aplanando la pirámide y mitigando riesgo de concentración."},
+      {"key":"proyeccion","header":"5. Proyección y Riesgos","tpl":"Si la pauta de reinversión se mantiene moderada (ratio neto positivo), el club preserva margen para ajustes específicos. Riesgos: repunte inflacionario o necesidad de reemplazos simultáneos en líneas ya optimizadas."}
+    ]
+  },
+  "24/25": {
+    "title": "Análisis Temporada 24/25 – Fase de Saneamiento",
+    "intro": "Primer tramo del ciclo: descompresión agresiva de la masa heredada.",
+    "sections": [
+      {"key":"foco","header":"1. Ahorro Bruto y Alcance","tpl":"Se ejecutan {{countSalidas}} salidas generando {{totalAhorro}} de liberación semanal. Saldo neto: {{balanceFmt}}."},
+      {"key":"pos","header":"2. Distribución Posicional","tpl":"La mayor racionalización incide sobre {{posTopRelease}}, reduciendo sobrepeso sin comprometer rotación funcional."},
+      {"key":"disciplina","header":"3. Disciplina Salarial de Entrada","tpl":"Diferencial ahorro medio vs salario medio entrante: {{avgAhorro}} vs {{avgGasto}}, evitando recrear picos rígidos."},
+      {"key":"riesgos","header":"4. Riesgos Inmediatos","tpl":"Riesgo: brecha de experiencia si la reposición prioriza proyección. Mitigación: escalado gradual de responsabilidad."},
+      {"key":"outlook","header":"5. Outlook 25/26","tpl":"Con colchón neto {{balanceFmt}}, se habilitan fichajes calibrados (impacto + sostenibilidad contractual)."}
+    ]
+  },
+  "25/26": {
+    "title": "Análisis Temporada 25/26 – Fase de Reaceleración Controlada",
+    "intro": "Segundo tramo: reinversión selectiva apoyada en colchón previo.",
+    "sections": [
+      {"key":"mix","header":"1. Perfil de Incorporaciones","tpl":"Ingresan {{countLlegadas}} fichajes con salario medio de {{avgGasto}} manteniendo escalonamiento interno."},
+      {"key":"sosten","header":"2. Sostenibilidad del Gasto","tpl":"La ratio acumulada ahorro/gasto en {{ratioAG}} preserva margen operativo."},
+      {"key":"pos","header":"3. Rebalance Posicional","tpl":"La absorción de nueva masa se concentra en {{posTopInvest}}, elevando capacidad ofensiva y valor de mercado."},
+      {"key":"estructura","header":"4. Capas Contractuales","tpl":"No se reconstruye un núcleo hipertrofiado >£200k; riesgo diversificado en tramos medios."},
+      {"key":"proy","header":"5. Proyección Próxima Ventana","tpl":"Saldo neto {{balanceFmt}} permite inversión focalizada (depth lateral, mediocentro progresión) conservando flexibilidad."}
+    ]
+  }
+}

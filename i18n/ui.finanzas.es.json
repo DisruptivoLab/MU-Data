@@ -1,0 +1,26 @@
+{
+  "finanzas": {
+    "intro": "Esta sección convierte el ahorro semanal neto en su equivalencia anual y lo compara con los ingresos proyectados del club para el ejercicio 2025.",
+    "footnote": "Fuente ingresos: Earnings Release Q3 FY2025 (Manchester United plc). Rango guía £660m–£670m.",
+  "analysisTpl": "Un ahorro neto semanal de <strong>{weeklySaving}</strong> se traduce en <strong>{annualSaving}</strong> al anualizar (x52). Esto representa el <strong>{pctRevenue}</strong> de los ingresos guía mid (£{revMidM}m) y el <strong>{pctEbitda}</strong> del midpoint EBITDA (£{ebitdaMidM}m). {qualifier}",
+    "qualifiers": {
+      "marginal": "El impacto permanece marginal a esta escala.",
+      "meaningful": "Supone un refuerzo significativo de la eficiencia estructural.",
+      "material": "Implica un cambio estructural material frente a la base de costes previa.",
+      "negative": "Una cifra neta negativa reduce flexibilidad estructural y exige compensación en otras partidas."
+    },
+    "kpis": {
+      "ahorroSemanal": "Ahorro Semanal Neto",
+      "ahorroAnual": "Ahorro Anualizado",
+      "ingresosProyectados": "Ingresos Proyectados",
+      "porcIngresos": "% de Ingresos",
+      "ebitdaGuia": "Guía EBITDA (mid)",
+      "porcEbitda": "% de EBITDA"
+    },
+    "chart": {
+      "labelAhorroAnual": "Ahorro Anualizado (£m)",
+      "labelIngresos": "Ingresos Proyectados (£m)",
+      "labelEbitda": "EBITDA Mid (£m)"
+    }
+  }
+}

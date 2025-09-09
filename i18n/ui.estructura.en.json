@@ -1,0 +1,26 @@
+{
+  "estructura": {
+    "title": "Wage Structure Analysis",
+    "intro": "Segmentation of the weekly bill into three functional strata. Assesses top-band compression, core competitive density and support layer efficiency after restructuring.",
+    "tiers": {
+      "elite": "Elite (>£200k)",
+      "clave": "Core (£100k-£200k)",
+      "equipo": "Support (<£100k)"
+    },
+    "charts": {
+      "out": {
+        "title": "Departures Distribution by Tier",
+        "tooltip": "{label}: {value} departures"
+      },
+      "in": {
+        "title": "Arrivals Distribution by Tier",
+        "tooltip": "{label}: {value} arrivals"
+      }
+    },
+    "table": {
+      "colTier": "Tier",
+      "colSalidas": "Departures",
+      "colLlegadas": "Arrivals"
+    }
+  }
+}

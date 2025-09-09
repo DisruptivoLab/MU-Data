@@ -1,0 +1,16 @@
+{
+  "evolution": {
+    "title": "Weekly Wage Bill Evolution (9 Seasons)",
+    "paragraph": "The wage trajectory shows an accelerated expansion between <strong class='text-white'>{rangeGrowth}</strong> (investment growth up to the <strong class='text-white'>peak {peakValue}</strong> per week in {peakSeason}) followed by a structured contraction. INEOS inherits in <strong class='text-white'>{season2324} ({val2324})</strong> an already adjusting mass and deepens the rationalisation to <strong class='text-white'>{season2425} ({val2425})</strong> and <strong class='text-white'>{season2526} ({val2526})</strong>. The current level is the <strong class='text-white'>{rankStatement}</strong>, and sits <strong class='mu-green-text'>{dropPct}</strong> below the recent maximum. Base source: {capology}+ internal estimates.",
+    "metrics": {
+      "peak": "Peak ({peakSeason})",
+      "current": "Current ({currentSeason})",
+      "reduction": "Reduction vs Peak",
+      "rank": "Historical Position"
+    },
+    "rankStatements": {
+      "secondLowest": "second lowest of the last 8 full campaigns"
+    },
+    "sourceCapology": "<a href='https://www.capology.com/club/manchester-united/salarios' target='_blank' rel='noopener' class='underline hover:text-white'>Capology</a> "
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "finanzas": {
+    "intro": "This section annualises the net weekly saving and benchmarks it against projected FY2025 club revenues.",
+    "footnote": "Revenue source: Earnings Release Q3 FY2025 (Manchester United plc). Guidance range £660m–£670m.",
+  "analysisTpl": "A net weekly saving of <strong>{weeklySaving}</strong> annualises to <strong>{annualSaving}</strong> (x52). This equals <strong>{pctRevenue}</strong> of midpoint revenue (£{revMidM}m) and <strong>{pctEbitda}</strong> of midpoint EBITDA (£{ebitdaMidM}m). {qualifier}",
+    "qualifiers": {
+      "marginal": "Impact remains marginal at current scale.",
+      "meaningful": "Represents a meaningful reinforcement of structural efficiency.",
+      "material": "Indicates a material structural shift versus the prior cost base.",
+      "negative": "A negative net figure reduces structural flexibility and requires offset elsewhere."
+    },
+    "kpis": {
+      "ahorroSemanal": "Net Weekly Saving",
+      "ahorroAnual": "Annualised Saving",
+      "ingresosProyectados": "Projected Revenue",
+      "porcIngresos": "% of Revenue",
+      "ebitdaGuia": "EBITDA Guidance (mid)",
+      "porcEbitda": "% of EBITDA"
+    },
+    "chart": {
+      "labelAhorroAnual": "Annualised Saving (£m)",
+      "labelIngresos": "Projected Revenue (£m)",
+      "labelEbitda": "EBITDA Mid (£m)"
+    }
+  }
+}

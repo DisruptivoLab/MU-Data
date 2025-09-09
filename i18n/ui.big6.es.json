@@ -1,0 +1,19 @@
+{
+  "big6": {
+    "title": "Big Six 25/26: Comparativa de Masa Salarial Semanal",
+    "paragraph": "Manchester United (<strong class='text-white'>{unitedValueM}</strong>) se sitúa en una posición intermedia competitiva: por debajo de <strong class='text-white'>Manchester City ({cityValueM})</strong>, pero por encima del trío Arsenal–Liverpool–Chelsea (rango <strong class='text-white'>{alcRangeLowM}–{alcRangeHighM}</strong>). Spurs es el perfil más ligero (<strong class='text-white'>{spursValueM}</strong>). El United está un <strong class='mu-green-text'>{gapToCityPct}</strong> vs City y un <strong class='text-white'>{gapToChasingPct}</strong> sobre la media Arsenal–Liverpool–Chelsea; la masa ya es más compacta, reduciendo presión sobre el techo interno y mejorando margen futuro (PSR/FFP).",
+    "datasetLabel": "Masa Semanal (£)",
+    "footnote": "*Media rivales = promedio de los otros cinco clubes del Big Six.",
+    "metrics": {
+      "gapCity": "Gap vs City",
+      "gapChasing": "Ventaja vs Media Arsenal/Liverpool/Chelsea",
+      "ratioSpurs": "Ratio United / Spurs"
+    },
+    "table": {
+      "club": "Club",
+      "weekly": "Masa Semanal (£)",
+      "pctCity": "% vs City",
+      "pctChasing": "% vs Media Otros"
+    }
+  }
+}

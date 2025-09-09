@@ -1,0 +1,19 @@
+{
+  "big6": {
+    "title": "Big Six 25/26: Weekly Wage Bill Comparison",
+    "paragraph": "Manchester United (<strong class='text-white'>{unitedValueM}</strong>) sits in a competitive middle ground: below <strong class='text-white'>Manchester City ({cityValueM})</strong>, but above the Arsenal–Liverpool–Chelsea cluster (range <strong class='text-white'>{alcRangeLowM}–{alcRangeHighM}</strong>). Spurs represents the leanest profile (<strong class='text-white'>{spursValueM}</strong>). United is <strong class='mu-green-text'>{gapToCityPct}</strong> vs City and <strong class='text-white'>{gapToChasingPct}</strong> above the Arsenal–Liverpool–Chelsea average; the bill is now more compressed, reducing internal wage ceiling pressure and improving future PSR/FFP flexibility.",
+    "datasetLabel": "Weekly Bill (£)",
+    "footnote": "*Rivals average = average of the other five Big Six clubs.",
+    "metrics": {
+      "gapCity": "Gap vs City",
+      "gapChasing": "Advantage vs Arsenal/Liverpool/Chelsea Avg",
+      "ratioSpurs": "United / Spurs Ratio"
+    },
+    "table": {
+      "club": "Club",
+      "weekly": "Weekly Bill (£)",
+      "pctCity": "% vs City",
+      "pctChasing": "% vs Avg Others"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "balance": {
+    "title": "Balance General: Ahorro vs. Inversión",
+    "chartCenterLabel": "Balance Neto",
+    "kpiAhorro": "Ahorro por Salidas",
+    "kpiGasto": "Gasto en Fichajes",
+    "kpiBalance": "Balance Neto Final",
+    "subWeekly": "Semanales"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "nav": {
+    "filtros": "Filters",
+    "balance": "General Balance",
+  "finanzas": "Finance",
+    "evolucion": "Evolution",
+    "big6": "Big Six",
+    "posiciones": "Positions",
+    "estructura": "Structure",
+    "operaciones": "Operations",
+    "analisis": "Analysis",
+    "observaciones": "Notes",
+  "glosario": "Glossary",
+  "metodologia": "Methodology",
+  "salariosTag": "Salaries"
+  },
+  "sections": {
+    "hero.title": "Manchester United Wage Bill Analysis Season 24/25 to 25/26",
+  "hero.intro": "This dashboard synthesises Manchester United's wage bill evolution and restructuring following the 2024 operational governance shift. It integrates exits, arrivals and weekly mass impact, illustrating the transition from an inflated peak toward a more sustainable model without sacrificing competitive intent. Each visual reinforces three core questions: <span class='text-white font-semibold'>How much is released?</span>, <span class='text-white font-semibold'>Where is it reassigned?</span> and <span class='text-white font-semibold'>How efficient is the new structure?</span>",
+  "hero.filterTitle": "You can filter by season",
+  "hero.filterHint": "Tip: start in Total mode for macro context, then toggle each campaign to inspect sequencing and depth.",
+    "balance.title": "General Balance: Savings vs. Investment",
+    "evolucion.title": "Weekly Wage Mass Evolution (9 Seasons)",
+    "big6.title": "Big Six 25/26: Weekly Wage Comparison",
+    "posicion.title": "Positional Analysis",
+    "estructura.title": "Wage Structure Analysis",
+  "finanzas.title": "Annualised Financial Impact",
+    "operaciones.title": "Operations Detail",
+    "observaciones.title": "Technical Notes",
+    "glosario.title": "Glossary"
+  },
+  "footer": {
+    "fuentesTitulo": "Data Sources:",
+    "fuentesTexto": "Wage data sourced from <a href=\"https://www.capology.com/club/manchester-united/salarios\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline hover:text-white\">Capology.com</a> and adjusted with additional research.",
+    "creditos": "Created by <span class=\"mu-red font-semibold\">@D</span> for the <span class=\"font-semibold text-white\">MANCHESTER UNITED COMMUNITY</span>"
+  }
+  ,"filters":{
+    "all":"Total",
+    "24_25":"24/25",
+    "25_26":"25/26"
+  }
+  ,"kpis":{
+    "ahorroPorSalidas":"Savings from Exits",
+    "gastoEnFichajes":"Wage Cost of Signings",
+    "balanceNeto":"Final Net Balance",
+  "semanales":"Weekly",
+  "balanceLabelPos":"Weekly Saving",
+  "balanceLabelNeg":"Weekly Increase",
+    "ordenSalarioDesc":"Order: Wage Desc",
+    "ordenSalarioAsc":"Order: Wage Asc",
+    "exportarCsv":"Export CSV",
+    "kpisOperativosNote":"Operational KPIs (generated dynamically per active filter)",
+    "toggleHint":"Toggle reverses order in both tables; export builds combined file.",
+    "salidasTitulo":"Exits & Savings Generated",
+    "fichajesTitulo":"Signings & Investment",
+    "totalAhorrado":"TOTAL SAVED",
+    "totalInvertido":"TOTAL INVESTED",
+    "jugador":"Player",
+    "ahorroSemanal":"Weekly Saving",
+    "salarioSemanal":"Weekly Wage"
+  }
+  ,"kpisOperativos":{
+    "numSalidas":"# Exits",
+    "numFichajes":"# Signings",
+    "ahorroMedio":"Avg Saving",
+    "salarioMedioFichajes":"Avg Signing Wage",
+    "ratioAhorroGasto":"Savings / Spend Ratio",
+    "balanceNetoOp":"Net Balance"
+  }
+}

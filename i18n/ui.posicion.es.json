@@ -1,0 +1,38 @@
+{
+  "posicion": {
+    "title": "Análisis por Posición",
+    "intro": "El reequilibrio salarial se apoya en <span class='text-white font-medium'>contención en defensa</span>, una <span class='text-white font-medium'>optimización del bloque medio</span> y una <span class='text-white font-medium'>reconfiguración ofensiva</span>. La distribución señala dónde se concentra la liberación y qué líneas absorben reinversión.",
+    "kpis": {
+      "maxRelease": "Línea con mayor liberación",
+      "maxNewMass": "Línea con mayor nueva masa",
+      "redistributionRatio": "Ratio Redistribución",
+      "deltaDefAtk": "Delta Neto DEF vs ATA (k£)"
+    },
+    "positions": ["Portería","Defensa","Mediocampo","Delantera"],
+    "badges": {
+      "reinversion": "Reinversión Neta",
+      "liberacion": "Liberación Neta",
+      "neutro": "Neutro"
+    },
+    "charts": {
+      "balance": {
+  "ahorro": "Ahorro Semanal",
+  "gasto": "Nueva Masa Semanal",
+  "tooltip": "{label}: {value}",
+  "datasets": { "ahorro": "Ahorro", "gasto": "Inversión" }
+      },
+      "flow": {
+  "salidas": "Salidas (count)",
+  "llegadas": "Llegadas (count)",
+  "tooltip": "{label}: {value} jugadores",
+  "datasets": { "salidas": "Salidas", "llegadas": "Llegadas" }
+      },
+      "stack": {
+  "ahorro": "Ahorro %",
+  "gasto": "Nueva Masa %",
+  "tooltip": "{label}: {value}%",
+  "datasets": { "ahorro": "Ahorro %", "gasto": "Nueva Masa %" }
+      }
+    }
+  }
+}

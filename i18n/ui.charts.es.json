@@ -1,0 +1,11 @@
+{
+  "charts": {
+    "balance": {
+      "labels": ["Ahorro Generado", "Gasto en Fichajes"],
+      "tooltip": "{label}: {value}"
+    },
+    "evolution": {
+      "datasetLabel": "Masa Salarial Semanal"
+    }
+  }
+}

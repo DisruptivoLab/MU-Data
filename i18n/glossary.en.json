@@ -1,0 +1,16 @@
+{
+  "glosario": [
+    {"term":"Savings","def":"Weekly wage mass reduction linked to an exit."},
+    {"term":"Investment","def":"New wage mass added via signings or renewals."},
+    {"term":"Net Balance","def":"Savings minus investment; positive = net compression."},
+    {"term":"Redistribution","def":"Allocation of released wage into other lines or tiers."},
+    {"term":"Wage Tier","def":"Defined remuneration layer (Elite, Core, Squad) used to analyse concentration."},
+    {"term":"Wage Elasticity","def":"Capacity to reshape structure without degrading sporting competitiveness."},
+    {"term":"Weekly Wage Mass","def":"Aggregate base weekly wages of active registered squad."},
+    {"term":"Net Release","def":"Savings exceeding reinvestment within a positional unit."},
+    {"term":"Net Reinvestment","def":"Reinvestment exceeding savings within a positional unit."},
+    {"term":"Wage Cushion","def":"Headroom retained for future targeted operations under discipline."},
+    {"term":"Compression","def":"Flattening process reducing upper-tier spikes in distribution."},
+    {"term":"PSR / FFP","def":"Premier League / UEFA financial sustainability regulations."}
+  ]
+}

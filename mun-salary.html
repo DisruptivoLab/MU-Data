@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Salarial: Manchester United</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Forzar color blanco en leyendas de Chart.js */
+        .chart-container + div[role="legend"] li,
+        .chart-container + div[role="legend"] span {
+            color: #fff !important;
+        }
+    </style>
+    <style>
+        /* Espaciado global entre secciones */
+        .section-block { margin-bottom: 5rem; } /* ~mb-20 */
+        @media (min-width:1024px){ .section-block { margin-bottom: 6rem; } }
+        /* Sidebar activo (scrollspy refuerzo) */
+        .sidebar-link.active-scroll, .carousel-link.active-scroll { color:#fff !important; background:#222 !important; }
+    /* Filtros fijos al desplazarse */
+    .filters-fixed { position:fixed; top:1%; left:0; right:0; z-index:60; padding:0.5rem 0.75rem;}
+    @media (min-width:1024px){ .filters-fixed { left:15%; width:85%;} }
+        label { color: #fff !important; }
+        body { font-family: 'Poppins', sans-serif; background-color: #000000; }
+        .mu-red { color: #DA291C; }
+        .mu-red-bg { background-color: #DA291C; }
+        .mu-green-text { color: #22c55e; }
+        .card { background-color: #080808; border: 1px solid #333; border-radius: 1rem; padding: 1.5rem; }
+        .table-header { background-color: #2a2a2a; }
+        .kpi-value { font-size: 2rem; font-weight: 700; line-height: 2.25rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .filter-btn { transition: all 0.2s ease-in-out; }
+        .filter-btn.active { background-color: #DA291C; color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(218, 41, 28, 0.3); }
+        .filter-btn:not(.active) { background-color: #2a2a2a; color: #ccc; }
+    </style>
+</head>
+<body class="text-white">
+    <!-- SIDEBAR ESCRITORIO -->
+    <div class="lg:flex lg:flex-row">
+    <nav class="hidden lg:flex lg:flex-col lg:w-[15%] bg-black border-r border-gray-800 z-40 lg:fixed lg:top-0 lg:left-0 lg:h-screen lg:overflow-y-auto">
+        <div class="flex flex-col h-full py-8 px-4 gap-3">
+            <a href="#top" class="text-2xl font-bold mu-red mb-6 hover:text-white transition leading-tight"><span class="block">MU Data</span><span class="block text-xl font-normal tracking-wide text-white" data-brand-salarios>Salarios</span></a>
+            <a href="#filtros" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Filtros</a>
+            <a href="#balance" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Balance General</a>
+            <a href="#finanzas" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Finanzas</a>
+            <a href="#evolucion" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Evolución</a>
+            <a href="#big6" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Big Six</a>
+            <a href="#posicion" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Posiciones</a>
+            <a href="#estructura" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Estructura</a>
+            <a href="#operaciones" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Operaciones</a>
+            <a href="#analisis" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Análisis</a>
+            <a href="#observaciones" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Observaciones</a>
+            <a href="#glosario" class="sidebar-link py-2 px-3 rounded hover:bg-gray-900 hover:text-white transition">Glosario</a>
+            <a href="method.html" class="sidebar-link py-2 px-3 rounded mt-4 bg-gray-900 hover:bg-gray-700 hover:text-white transition">Metodología</a>
+        </div>
+    </nav>
+    <!-- MENU CARRUSEL MOVIL -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-black border-t border-gray-800 flex lg:hidden overflow-x-auto no-scrollbar">
+        <div class="flex flex-row gap-2 w-full px-2 py-2 overflow-x-auto">
+            <a href="#top" class="carousel-link font-bold px-3 py-2 rounded hover:text-white transition whitespace-nowrap" data-top-link>Top</a>
+            <a href="#filtros" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Filtros</a>
+            <a href="#balance" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Balance</a>
+            <a href="#finanzas" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Finanzas</a>
+            <a href="#evolucion" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Evolución</a>
+            <a href="#big6" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Big Six</a>
+            <a href="#posicion" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Posiciones</a>
+            <a href="#estructura" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Estructura</a>
+            <a href="#operaciones" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Oper.</a>
+            <a href="#analisis" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Análisis</a>
+            <a href="#observaciones" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Observ.</a>
+            <a href="#glosario" class="carousel-link px-3 py-2 rounded hover:text-white transition whitespace-nowrap">Glosario</a>
+            <a href="method.html" class="carousel-link px-3 py-2 rounded bg-gray-900 hover:bg-gray-700 hover:text-white transition whitespace-nowrap">Metodología</a>
+        </div>
+    </nav>
+    <style>
+        .sidebar-link, .carousel-link { color: #ccc; transition: color 0.2s, background 0.2s; }
+        .sidebar-link:hover, .carousel-link:hover, .sidebar-link.active, .carousel-link.active { color: #fff !important; background: #222 !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; }
+        /* Hero background con imagen + degradado */
+        #hero {
+            position: relative;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0, 0, 0, 0.397) 60%, rgba(0, 0, 0, 0.699) 80%, #000 100%), url('https://cdn.thepeoplesperson.com/wp-content/uploads/2023/12/old-trafford-aerial-night-manchester-united-v-arsenal-fc-premier-league-min.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+        }
+        #hero h1 { text-shadow: 0 4px 18px rgba(0,0,0,0.55); }
+        #hero p, #hero li { text-shadow: 0 2px 10px rgba(0,0,0,0.45); }
+    </style>
+
+    <div class="container relative mx-auto p-4 md:p-3 lg:p-8 w-full max-w-none lg:w-[85%] lg:ml-[15%] lg:px-5" id="top">
+        <!-- Toggle Idioma -->
+    <button id="lang-toggle" aria-label="Toggle language" class="absolute top-3 right-3 z-50 w-11 h-11 flex items-center justify-center rounded-full mu-red-bg backdrop-blur-sm text-[10px] md:text-xs font-bold tracking-wide border border-gray-600/40 text-white shadow-[0_0_6px_rgba(218,41,28,0.4),0_0_0_1px_rgba(218,41,28,0.5)] hover:shadow-[0_0_14px_rgba(218,41,28,0.75),0_0_0_1px_rgba(218,41,28,0.6)] hover:bg-gray-900 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-[#DA291C]/70 focus:ring-offset-2 focus:ring-offset-black"><span class="lang-label">ES</span></button>
+        <!-- Branding móvil absoluto -->
+        <div id="mobile-brand" class="absolute top-3 left-3 z-50 flex flex-col items-start px-3 py-2 rounded-md bg-black/80 border border-gray-700 backdrop-blur-sm leading-none md:hidden">
+            <span class="text-xl font-bold tracking-tight mu-red">MU DATA</span>
+            <span class="text-[16px] font-medium text-white tracking-wide" data-brand-salarios>Salarios</span>
+        </div>
+        
+        <!-- HERO PRINCIPAL -->
+        <section id="hero" class="min-h-[70vh] flex flex-col justify-center items-center text-center mb-12 relative overflow-hidden px-1">
+            <div class="relative max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26</h1>
+                <p class="text-gray-300 leading-relaxed text-sm md:text-base mb-6">
+                    Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class="text-white font-semibold">¿Cuánto se libera?</span>, <span class="text-white font-semibold">¿Dónde se reasigna?</span> y <span class="text-white font-semibold">¿Qué tan eficiente es la nueva estructura?</span>
+                </p>
+                <div class="text-center ">
+                    <h3 class="text-sm font-semibold tracking-wide text-gray-200 mb-2">Pedes filtrar por temporada</h3>
+                    <p class="mt-3 text-xs md:text-sm text-gray-400 italic">Sugerencia: examina primero el modo Total para captar el marco global y luego alterna cada campaña para analizar profundidad y secuencia.</p>
+                </div>
+            </div>
+        </section>
+
+    <!-- === FILTROS DE TEMPORADA === -->
+    <section id="filtros" class="section-block flex justify-center items-center gap-2 md:gap-4">
+            <button id="btn-all" data-filter="all" class="filter-btn active font-semibold py-2 px-4 rounded-full">
+                <span class="hidden md:inline">Total (Desde 2024)</span>
+                <span class="md:hidden">Todo</span>
+            </button>
+            <button id="btn-2425" data-filter="24-25" class="filter-btn font-semibold py-2 px-4 rounded-full">
+                <span class="hidden md:inline">Temporada 24/25</span>
+                <span class="md:hidden">24/25</span>
+            </button>
+            <button id="btn-2526" data-filter="25-26" class="filter-btn font-semibold py-2 px-4 rounded-full">
+                <span class="hidden md:inline">Temporada 25/26</span>
+                <span class="md:hidden">25/26</span>
+            </button>
+        </section>
+
+    <!-- === GRÁFICO CENTRAL === -->
+    <section id="balance" class="py-12 section-block">
+            <h3 class="text-xl font-bold mb-4 text-center">Balance General: Ahorro vs. Inversión</h3>
+            <div class="relative h-64 md:h-80 mx-auto mb-8 max-w-[400px]">
+                <canvas id="salaryChart"></canvas>
+            </div>
+            <!-- KPIs integrados -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="card text-center"><h3 data-i18n="kpis.ahorroPorSalidas" class="text-lg font-semibold text-gray-300 mb-2">Ahorro por Salidas</h3><p id="kpi-ahorro" class="kpi-value text-white"></p><p class="text-sm text-gray-400" data-i18n="kpis.semanales">Semanales</p></div>
+                <div class="card text-center"><h3 data-i18n="kpis.gastoEnFichajes" class="text-lg font-semibold text-gray-300 mb-2">Gasto en Fichajes</h3><p id="kpi-gasto" class="kpi-value mu-red"></p><p class="text-sm text-gray-400" data-i18n="kpis.semanales">Semanales</p></div>
+                <div class="card text-center"><h3 data-i18n="kpis.balanceNeto" class="text-lg font-semibold text-white mb-2">Balance Neto Final</h3><p id="kpi-balance" class="kpi-value"></p><p id="kpi-balance-label" class="text-sm text-gray-200"></p></div>
+            </div>
+        </section>
+
+    <!-- (Sección KPIs eliminada: contenido movido dentro de Balance) -->
+
+    <!-- === SECCIÓN FINANZAS / IMPACTO ANUAL === -->
+    <section id="finanzas" class="py-12 section-block">
+        <h3 class="text-xl font-bold mb-4 text-center" data-fin-title>Impacto Financiero Anualizado</h3>
+        <p class="text-gray-300 text-sm md:text-base mb-6 max-w-3xl mx-auto leading-relaxed text-center" data-fin-intro></p>
+        <div id="fin-kpis" class="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 mb-8"></div>
+        <div class="relative h-72 md:h-80 max-w-3xl mx-auto">
+            <canvas id="financialImpactChart"></canvas>
+        </div>
+    <p class="text-gray-300 text-xs md:text-sm mt-6 max-w-3xl mx-auto leading-relaxed text-center" data-fin-analysis></p>
+        <p class="text-center text-xs text-gray-500 mt-4" data-fin-footnote></p>
+    </section>
+
+    <!-- === EVOLUCIÓN MASA SALARIAL (MOVIDO DEBAJO DE KPIs) === -->
+    <section id="evolucion" class="py-12 section-block">
+        <h3 class="text-xl font-bold mb-4 text-center" data-evo-title>Evolución de la Masa Salarial Semanal (9 Temporadas)</h3>
+        <p class="text-gray-300 text-sm md:text-base mb-4 text-center max-w-4xl mx-auto leading-relaxed" data-evo-paragraph>
+            <!-- Evolución paragraph dinámico se inserta vía i18n -->
+        </p>
+        <div class="relative h-80 md:h-96">
+            <canvas id="salaryEvolutionChart"></canvas>
+        </div>
+        <div id="salary-evolution-metrics" class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-evo-metric-peak-label>...</p>
+                <p class="text-lg font-semibold" id="evo-peak">£4,657,500</p>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-evo-metric-current-label>...</p>
+                <p class="text-lg font-semibold" id="evo-current">£3,052,000</p>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-evo-metric-reduction-label>...</p>
+                <p class="text-lg font-semibold mu-green-text" id="evo-drop"></p>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-evo-metric-rank-label>...</p>
+                <p class="text-lg font-semibold text-white" id="evo-rank"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- === COMPARACIÓN BIG SIX 25/26 === -->
+    <section id="big6" class="py-12 section-block">
+        <h3 class="text-xl font-bold mb-4 text-center" data-big6-title>Big Six 25/26: Comparativa de Masa Salarial Semanal</h3>
+        <p class="text-gray-300 text-sm md:text-base mb-6 text-center max-w-3xl mx-auto leading-relaxed" data-big6-paragraph></p>
+        <div class="relative h-80 md:h-96 mb-8">
+            <canvas id="bigSixChart"></canvas>
+        </div>
+        <div class="overflow-x-auto mb-4">
+            <table class="w-full max-w-3xl mx-auto text-sm md:text-base text-center border border-gray-700 rounded-lg">
+                <thead class="">
+                    <tr>
+                        <th class="p-3" data-big6-th-club>Club</th>
+                        <th class="p-3" data-big6-th-weekly>Masa Semanal (£)</th>
+                        <th class="p-3" data-big6-th-pctcity>% vs City</th>
+                        <th class="p-3" data-big6-th-pctchasing>% vs Media Otros</th>
+                    </tr>
+                </thead>
+                <tbody id="big6-table" class="divide-y divide-gray-700"></tbody>
+            </table>
+            <p class="text-xs text-gray-500 mt-2 text-center" data-big6-footnote>*Media rivales = promedio de los otros cinco clubes del Big Six.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6" id="big6-metrics">
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-big6-metric-gapcity>Gap vs City</p>
+                <p class="text-lg font-semibold" id="big6-gap-city"></p>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-big6-metric-gapchasing>Ventaja vs Media Arsenal/Liverpool/Chelsea</p>
+                <p class="text-lg font-semibold" id="big6-gap-chasing"></p>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg p-4 text-center">
+                <p class="text-xs text-gray-400" data-big6-metric-ratiospurs>Ratio United / Spurs</p>
+                <p class="text-lg font-semibold" id="big6-ratio-spurs"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- === ANÁLISIS POR POSICIÓN === -->
+    <section id="posicion" class="py-12 section-block">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6" data-posicion-title>Análisis por Posición</h2>
+            <p class="text-center text-gray-300 text-sm md:text-base mb-8 max-w-3xl mx-auto leading-relaxed" data-posicion-intro></p>
+            <div id="pos-kpis" class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 mb-8"></div>
+            <div id="pos-badges" class="flex flex-wrap justify-center gap-3 mb-10"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="card lg:col-span-1"><h3 class="text-xl font-bold mb-4 text-center">Balance Salarial por Línea</h3><div class="chart-container"><canvas id="positionalBalanceChart"></canvas></div></div>
+                <div class="card lg:col-span-1"><h3 class="text-xl font-bold mb-4 text-center">Flujo de Jugadores</h3><div class="chart-container"><canvas id="playerFlowChart"></canvas></div></div>
+                <div class="card lg:col-span-1"><h3 class="text-xl font-bold mb-4 text-center">Participación % (Ahorro vs Gasto)</h3><div class="chart-container"><canvas id="positionalStackChart"></canvas></div></div>
+            </div>
+        </section>
+
+    <!-- === ANÁLISIS DE ESTRUCTURA SALARIAL === -->
+    <section id="estructura" class="py-12 section-block">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-2" data-estructura-title>Análisis de Estructura Salarial</h2>
+            <p class="text-center text-gray-300 text-xs md:text-sm mb-6 max-w-2xl mx-auto leading-relaxed" data-estructura-intro></p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 text-center" data-estructura-out-title>Distribución de Salidas</h3>
+                    <div class="chart-container">
+                        <canvas id="salaryStructureOutChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 text-center" data-estructura-in-title>Distribución de Fichajes</h3>
+                    <div class="chart-container">
+                        <canvas id="salaryStructureInChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Tabla comparativa de estructura salarial (resumen) -->
+            <div class="overflow-x-auto mt-8">
+                <table class="w-full max-w-2xl mx-auto text-sm md:text-base text-center border border-gray-700 rounded-lg">
+                    <thead class="">
+                        <tr>
+                            <th class="p-3" data-estructura-th-tier>Tipo salario</th>
+                            <th class="p-3" data-estructura-th-salidas>Salidas</th>
+                            <th class="p-3" data-estructura-th-llegadas>Fichajes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-estructura-salarial">
+                        <!-- JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    <!-- === DETALLE DE OPERACIONES === -->
+    <section id="operaciones" class="py-12 section-block">
+        <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">Detalle de Operaciones</h2>
+        <p class="text-center text-gray-300 text-sm md:text-base mb-8 max-w-3xl mx-auto leading-relaxed">
+            Visión granular de la <span class="text-white font-medium">desconsolidación salarial</span> (salidas) y la <span class="text-white font-medium">recomposición</span> (fichajes). Permite validar consistencia entre ahorro bruto, reinversión neta y distribución posicional. Los KPIs operativos contextualizan volumen y eficiencia media de cada flujo.
+        </p>
+    <div class="text-center text-xs text-gray-500 mb-3" data-i18n="kpis.kpisOperativosNote">KPIs operativos (se generan dinámicamente según el filtro activo)</div>
+    <div id="ops-kpis" class="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 mb-6"></div>
+    <!-- Controles de orden/export eliminados -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="card">
+                <h3 class="text-xl font-bold mb-4 text-gray-300" data-i18n="kpis.salidasTitulo">Salidas y Ahorro Generado</h3>
+                <div>
+                    <table class="w-full text-left text-sm">
+                        <thead class="table-header sticky top-0"><tr><th class="p-3" data-i18n="kpis.jugador">Jugador</th><th class="p-3 text-right" data-i18n="kpis.ahorroSemanal">Ahorro Semanal</th></tr></thead>
+                        <tbody id="salidas-tbody"></tbody>
+                        <tfoot><tr class="font-bold sticky bottom-0 bg-gray-800"><td class="p-3 pt-4" data-i18n="kpis.totalAhorrado">TOTAL AHORRADO</td><td id="total-ahorrado" class="p-3 pt-4 text-right text-base text-white"></td></tr></tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="text-xl font-bold mb-4 mu-red" data-i18n="kpis.fichajesTitulo">Fichajes e Inversión</h3>
+                <div>
+                    <table class="w-full text-left text-sm">
+                        <thead class="table-header sticky top-0"><tr><th class="p-3" data-i18n="kpis.jugador">Jugador</th><th class="p-3 text-right" data-i18n="kpis.salarioSemanal">Salario Semanal</th></tr></thead>
+                        <tbody id="llegadas-tbody"></tbody>
+                        <tfoot><tr class="font-bold sticky bottom-0 bg-gray-800"><td class="p-3 pt-4" data-i18n="kpis.totalInvertido">TOTAL INVERTIDO</td><td id="total-invertido" class="p-3 pt-4 text-right text-base mu-red"></td></tr></tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="analisis" class="card text-left">
+        <div id="analisis-card"></div>
+    </section>
+
+    <!-- Nueva sección Observaciones (estática vs filtros, pero multi-idioma futura) -->
+    <section id="observaciones" class="py-12 section-block">
+        <h3 class="text-xl font-bold mb-4 text-center">Observaciones Técnicas</h3>
+        <div id="observaciones-container" class="space-y-4 text-xs md:text-sm leading-relaxed text-gray-300"></div>
+    </section>
+
+    <!-- Glosario multi-idioma (estático) -->
+    <section id="glosario" class="py-12 section-block">
+        <h3 class="text-xl font-bold mb-4 text-center">Glosario</h3>
+        <div id="glosario-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs md:text-sm"></div>
+    </section>
+
+    <footer class="text-center mt-8 text-sm text-gray-500 space-y-4 mb-20">
+        <div>
+            <p><strong class="text-gray-400" data-footer-title>Fuentes de Datos:</strong></p>
+            <p data-footer-text>Datos salariales obtenidos de <a href="https://www.capology.com/club/manchester-united/salarios" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Capology.com</a> y ajustados según investigación adicional.</p>
+        </div>
+        <div class="pt-4 border-t border-gray-800">
+                <p class="text-gray-400" data-footer-credits>Creado por <span class="mu-red font-semibold">@D</span> para la <span class="font-semibold text-white">COMUNIDAD DE MANCHESTER UNITED</span></p>
+        </div>
+    </footer>
+    </div>
+    </div>
+
+    <script>
+    // Scroll suave para anclas
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.length > 1 && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+    let allPlayers = [];
+
+        const formatCurrency = (value) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', minimumFractionDigits: 0 }).format(value);
+        Chart.defaults.color = '#ccc';
+        Chart.defaults.font.family = 'Poppins';
+
+    let salaryChart, salaryEvolutionChart, posBalanceChart, playerFlowChart, positionalStackChart, salaryStructureOutChart, salaryStructureInChart, financialImpactChart;
+
+        const POSITIONS = ['Portero', 'Defensa', 'Medio', 'Ataque'];
+        const SALARY_TIERS = {
+            elite: { label: 'Élite (>£200k)', min: 200001, max: Infinity },
+            clave: { label: 'Clave (£100k-£200k)', min: 100000, max: 200000 },
+            equipo: { label: 'Equipo (<£100k)', min: 0, max: 99999 }
+        };
+
+        let currentFilter = 'all';
+        function updateDashboard(filter = 'all') {
+            currentFilter = filter;
+            const filteredPlayers = filter === 'all' ? allPlayers : allPlayers.filter(p => p.season === filter);
+
+            if(window.__opsDescending === undefined) window.__opsDescending = true;
+
+            const totalAhorro = filteredPlayers.filter(p => p.type === 'salida').reduce((sum, p) => sum + p.salary, 0);
+            const totalGasto = filteredPlayers.filter(p => p.type === 'llegada').reduce((sum, p) => sum + p.salary, 0);
+            const balance = totalAhorro - totalGasto;
+
+            document.getElementById('kpi-ahorro').textContent = formatCurrency(totalAhorro);
+            document.getElementById('kpi-gasto').textContent = formatCurrency(totalGasto);
+            const kpiBalance = document.getElementById('kpi-balance');
+            kpiBalance.textContent = `${balance >= 0 ? '+' : ''}${formatCurrency(balance)}`;
+            kpiBalance.className = `kpi-value ${balance >= 0 ? 'mu-green-text' : 'mu-red'}`;
+            // Etiqueta balance semanal dependerá del idioma y signo
+            const balanceLabelEl = document.getElementById('kpi-balance-label');
+            if(balanceLabelEl){
+                const uiData=UI_CACHE?.[window.currentLang];
+                const pos=uiData?.kpis?.balanceLabelPos || (window.currentLang==='en'?'Weekly Saving':'Ahorro Semanal');
+                const neg=uiData?.kpis?.balanceLabelNeg || (window.currentLang==='en'?'Weekly Increase':'Incremento Semanal');
+                balanceLabelEl.textContent = balance>=0 ? pos : neg;
+            }
+
+            const salidasTbody = document.getElementById('salidas-tbody');
+            const llegadasTbody = document.getElementById('llegadas-tbody');
+            salidasTbody.innerHTML = '';
+            llegadasTbody.innerHTML = '';
+
+            const sortedSalidas = [...filteredPlayers.filter(p => p.type === 'salida')].sort((a,b) => window.__opsDescending ? b.salary - a.salary : a.salary - b.salary);
+            sortedSalidas.forEach(p => {
+                const salaryText = p.salary > 0 ? formatCurrency(p.salary) : '<span class="text-gray-500">N/A</span>';
+                salidasTbody.innerHTML += `<tr class="border-b border-gray-700"><td class="p-3">${p.name} (${p.position})</td><td class="p-3 text-right">${salaryText}</td></tr>`;
+            });
+            const sortedLlegadas = [...filteredPlayers.filter(p => p.type === 'llegada')].sort((a,b) => window.__opsDescending ? b.salary - a.salary : a.salary - b.salary);
+            sortedLlegadas.forEach(p => {
+                const salaryText = p.salary > 0 ? formatCurrency(p.salary) : '<span class="text-gray-500">N/A</span>';
+                llegadasTbody.innerHTML += `<tr class="border-b border-gray-700"><td class="p-3">${p.name} (${p.position})</td><td class="p-3 text-right">${salaryText}</td></tr>`;
+            });
+
+            document.getElementById('total-ahorrado').textContent = formatCurrency(totalAhorro);
+            document.getElementById('total-invertido').textContent = formatCurrency(totalGasto);
+            
+            const ahorroPorPosicion = POSITIONS.map(pos => filteredPlayers.filter(p => p.type === 'salida' && p.position === pos).reduce((sum, p) => sum + p.salary, 0));
+            const gastoPorPosicion = POSITIONS.map(pos => filteredPlayers.filter(p => p.type === 'llegada' && p.position === pos).reduce((sum, p) => sum + p.salary, 0));
+            const salidasPorPosicion = POSITIONS.map(pos => filteredPlayers.filter(p => p.type === 'salida' && p.position === pos).length);
+            const llegadasPorPosicion = POSITIONS.map(pos => filteredPlayers.filter(p => p.type === 'llegada' && p.position === pos).length);
+
+            const salidasPorTier = Object.values(SALARY_TIERS).map(tier => filteredPlayers.filter(p => p.type === 'salida' && p.salary >= tier.min && p.salary <= tier.max).length);
+            const llegadasPorTier = Object.values(SALARY_TIERS).map(tier => filteredPlayers.filter(p => p.type === 'llegada' && p.salary >= tier.min && p.salary <= tier.max).length);
+
+            updateSalaryChart(totalAhorro, totalGasto);
+            updatePositionalBalanceChart(ahorroPorPosicion, gastoPorPosicion);
+            updatePlayerFlowChart(salidasPorPosicion, llegadasPorPosicion);
+            updatePositionalStackChart(ahorroPorPosicion, gastoPorPosicion);
+            updateSalaryStructureCharts(salidasPorTier, llegadasPorTier);
+            updateTablaEstructuraSalarial(salidasPorTier, llegadasPorTier);
+            // Métricas para análisis dinámico
+            const countSalidas = filteredPlayers.filter(p=>p.type==='salida').length;
+            const countLlegadas = filteredPlayers.filter(p=>p.type==='llegada').length;
+            const avgAhorro = countSalidas? totalAhorro/countSalidas : 0;
+            const avgGasto = countLlegadas? totalGasto/countLlegadas : 0;
+            const ratioAG = totalGasto? (totalAhorro/totalGasto).toFixed(2)+'x':'—';
+            const metrics = { countSalidas,countLlegadas,totalAhorro,totalGasto,balance, ahorroPos:ahorroPorPosicion, gastoPos:gastoPorPosicion, avgAhorro, avgGasto, ratioAG, tiers:{} };
+            window.__lastMetrics = metrics;
+            updateAnalisis(filter==='all'?'all':filter, metrics);
+            updatePositionalKpis(ahorroPorPosicion, gastoPorPosicion);
+            updatePositionalBadges(ahorroPorPosicion, gastoPorPosicion);
+            updateOperativeKpis(filteredPlayers, totalAhorro, totalGasto); // KPIs operativos
+            ensureBalanceLabels();
+            // Finanzas: cálculo anualizado (balance neto convertido a anual) y % sobre ingresos / EBITDA
+            try {
+                const finSection = document.getElementById('finanzas');
+                if(finSection){
+                    const finDomain = UI_DOMAIN_CACHE?.[window.currentLang||'es']?.finanzas?.finanzas;
+                    const weeklyNet = balance; // ahorro neto semanal (puede ser negativo)
+                    const annualised = weeklyNet * 52;
+                    const revenueLow = 660_000_000; // guía baja
+                    const revenueHigh = 670_000_000; // guía alta
+                    const revenueMid = (revenueLow + revenueHigh)/2;
+                    const ebitdaLow = 180_000_000, ebitdaHigh = 190_000_000; const ebitdaMid = (ebitdaLow+ebitdaHigh)/2;
+                    const pctRevenue = revenueMid ? (annualised/revenueMid*100) : 0;
+                    const pctEbitda = ebitdaMid ? (annualised/ebitdaMid*100) : 0;
+                    // Guardar métricas para re-render i18n posterior
+                    window.__finMetrics = { weeklyNet, annualised, revenueMid, ebitdaMid, pctRevenue, pctEbitda };
+                    // KPIs
+                    const kpiCfg = finDomain?.kpis || {};
+                    const kpis = [
+                        { label: kpiCfg.ahorroSemanal||'Net Weekly Saving', value: (weeklyNet>=0?'+':'')+formatCurrency(weeklyNet) },
+                        { label: kpiCfg.ahorroAnual||'Annualised Saving', value: (annualised>=0?'+':'')+formatCurrency(annualised) },
+                        { label: kpiCfg.ingresosProyectados||'Projected Revenue', value: formatCurrency(revenueMid) },
+                        { label: kpiCfg.porcIngresos||'% of Revenue', value: (pctRevenue).toFixed(2)+'%' },
+                        { label: kpiCfg.ebitdaGuia||'EBITDA Guidance (mid)', value: formatCurrency(ebitdaMid) },
+                        { label: kpiCfg.porcEbitda||'% of EBITDA', value: (pctEbitda).toFixed(2)+'%' }
+                    ];
+                    const finKpis = document.getElementById('fin-kpis'); if(finKpis){
+                        finKpis.innerHTML='';
+                        kpis.forEach(k=>{
+                            const div=document.createElement('div');
+                            div.className='card text-center';
+                            const posClass = /Saving|Ahorro|Annual/.test(k.label) ? (annualised>=0?'mu-green-text':'mu-red') : '';
+                            div.innerHTML=`<h3 class="text-xs font-semibold text-gray-300 mb-2 tracking-wide">${k.label}</h3><p class="text-lg font-bold ${posClass}">${k.value}</p>`;
+                            finKpis.appendChild(div);
+                        });
+                    }
+                    // Chart (comparativo en millones)
+                    const ctx = document.getElementById('financialImpactChart');
+                    if(ctx){
+                        const dataMillions = [annualised/1_000_000, revenueMid/1_000_000, ebitdaMid/1_000_000];
+                        const labels = [finDomain?.chart?.labelAhorroAnual||'Annualised Saving (£m)', finDomain?.chart?.labelIngresos||'Projected Revenue (£m)', finDomain?.chart?.labelEbitda||'EBITDA Mid (£m)'];
+                        const savingColor = annualised>=0 ? '#16a34a' : '#DA291C';
+                        const rebuild = () => {
+                            try {
+                                const inst = new Chart(ctx.getContext('2d'), {
+                                    type:'bar',
+                                    data:{ labels, datasets:[{ label: '£m', data: dataMillions, backgroundColor:[savingColor,'#4B5563','#9CA3AF'], borderColor:['#1f2937','#1f2937','#374151'], borderWidth:2, borderRadius:6 }]},
+                                    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c=> c.raw.toFixed(2)+' £m' } } }, scales:{ y:{ ticks:{ color:'#bbb' }, grid:{ color:'#222' }, beginAtZero:true } , x:{ ticks:{ color:'#bbb' }, grid:{ display:false } } } }
+                                });
+                                window.financialImpactChart = financialImpactChart = inst;
+                            } catch(e){ console.warn('Rebuild financialImpactChart failed', e); }
+                        };
+                        if(!window.financialImpactChart){
+                            rebuild();
+                        } else {
+                            financialImpactChart = window.financialImpactChart;
+                            if(!(financialImpactChart && financialImpactChart.data && Array.isArray(financialImpactChart.data.datasets))){
+                                rebuild();
+                            } else {
+                                try {
+                                    financialImpactChart.data.labels = labels;
+                                    financialImpactChart.data.datasets[0].data = dataMillions;
+                                    financialImpactChart.data.datasets[0].backgroundColor = [savingColor,'#4B5563','#9CA3AF'];
+                                    financialImpactChart.data.datasets[0].borderColor = ['#1f2937','#1f2937','#374151'];
+                                    financialImpactChart.update();
+                                } catch(updErr){
+                                    console.warn('Update financialImpactChart failed, rebuilding', updErr);
+                                    rebuild();
+                                }
+                            }
+                        }
+                    }
+                    // Análisis breve con calificadores i18n
+                    const analysisEl = document.querySelector('[data-fin-analysis]');
+                    if(analysisEl && finDomain?.analysisTpl){
+                        let qualifierKey;
+                        const absPctRev = Math.abs(pctRevenue);
+                        if(annualised<0){ qualifierKey='negative'; }
+                        else if(absPctRev < 0.5){ qualifierKey='marginal'; }
+                        else if(absPctRev < 1.5){ qualifierKey='meaningful'; }
+                        else { qualifierKey='material'; }
+                        const qualifier = finDomain?.qualifiers?.[qualifierKey] || '';
+                        const map = {
+                            weeklySaving: (weeklyNet>=0?'+':'')+formatCurrency(weeklyNet),
+                            annualSaving: (annualised>=0?'+':'')+formatCurrency(annualised),
+                            pctRevenue: pctRevenue.toFixed(2)+'%',
+                            pctEbitda: pctEbitda.toFixed(2)+'%',
+                            revMidM: (revenueMid/1_000_000).toFixed(1),
+                            ebitdaMidM: (ebitdaMid/1_000_000).toFixed(1),
+                            qualifier
+                        };
+                        let html = finDomain.analysisTpl;
+                        Object.entries(map).forEach(([k,v])=>{ html = html.replace('{'+k+'}', v); });
+                        analysisEl.innerHTML = html;
+                    }
+                }
+            } catch(finErr){ console.warn('Finanzas section error', finErr); }
+        }
+    // Listener de orden/export eliminado a petición del usuario
+
+        const centerTextPlugin = {
+            id: 'centerText',
+            afterDraw: (chart) => {
+                if (!chart.data.datasets[0].data || chart.data.datasets[0].data.length === 0) return;
+                const [ahorro, gasto] = chart.data.datasets[0].data;
+                if (ahorro === 0 && gasto === 0) return;
+                const balance = ahorro - gasto;
+                let { width, height, ctx } = chart;
+                ctx.restore();
+                ctx.font = "bold 24px Poppins";
+                ctx.textBaseline = 'middle';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = balance >= 0 ? '#22c55e' : '#DA291C';
+                ctx.fillText(`${balance >= 0 ? '+' : ''}${formatCurrency(balance)}`, width / 2, height / 2);
+                ctx.font = "14px Poppins";
+                ctx.fillStyle = '#9CA3AF';
+                const labelCenter = window.__balanceCenterLabel || (window.currentLang==='en'?'Net Balance':'Balance Neto');
+                ctx.fillText(labelCenter, width / 2, height / 2 - 30);
+                ctx.save();
+            }
+        };
+
+            // Plugin para forzar color blanco en leyendas de Chart.js (canvas)
+            const forceLegendWhitePlugin = {
+                id: 'forceLegendWhite',
+                beforeDraw: (chart) => {
+                    if (chart.options.plugins && chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+                        chart.options.plugins.legend.labels.color = '#fff';
+                    }
+                }
+            };
+
+        function updateSalaryChart(ahorro, gasto) { salaryChart.data.datasets[0].data = [ahorro, gasto]; salaryChart.update(); }
+        function rebuildChartsForLang(lang){
+            try {
+                // Doughnut: solo reasignar labels y actualizar
+                applyChartTranslations(lang);
+                // Evolution chart: actualizar label dataset y ejes
+                const chartsDomain = UI_DOMAIN_CACHE?.[lang]?.charts;
+                if(chartsDomain?.charts?.evolution && salaryEvolutionChart){
+                    salaryEvolutionChart.data.datasets[0].label = chartsDomain.charts.evolution.datasetLabel || salaryEvolutionChart.data.datasets[0].label;
+                    salaryEvolutionChart.update();
+                }
+                // Otros gráficos (pendiente modularización) podrían añadirse aquí
+            } catch(e){ console.warn('rebuildChartsForLang error', e); }
+        }
+        // Verifica si labels del doughnut siguen en estado placeholder y reintenta cargar dominio charts
+        function ensureBalanceLabels(){
+            try {
+                if(!salaryChart) return; const lbls = salaryChart.data.labels||[];
+                if(lbls.length===2 && (/^L1$/).test(lbls[0]) ){ // placeholders
+                    // Forzar recarga dominio charts y aplicar
+                    loadUiDomain('charts', window.currentLang||'es').then(()=>applyChartTranslations(window.currentLang||'es'));
+                }
+            } catch(e){ console.warn('ensureBalanceLabels error', e); }
+        }
+        function updatePositionalBalanceChart(ahorroData, gastoData) { posBalanceChart.data.datasets[0].data = ahorroData; posBalanceChart.data.datasets[1].data = gastoData; posBalanceChart.update(); }
+        function updatePositionalKpis(ahorroData, gastoData){
+            try {
+                const labels = ['Portería','Defensa','Mediocampo','Delantera'];
+                const totalAhorro = (ahorroData||[]).reduce((a,b)=>a+b,0) || 1;
+                const totalGasto = (gastoData||[]).reduce((a,b)=>a+b,0) || 1;
+                const ahorroPct = ahorroData.map(v=>v/totalAhorro);
+                const gastoPct = gastoData.map(v=>v/totalGasto);
+                const idxMaxAhorro = ahorroPct.indexOf(Math.max(...ahorroPct));
+                const idxMaxGasto = gastoPct.indexOf(Math.max(...gastoPct));
+                const redistribucionRatio = ( (totalGasto/ totalAhorro) ).toFixed(2)+'x';
+                const defensaIdx=1, ataqueIdx=3;
+                const deltaDefAta = (( (gastoData[defensaIdx]-ahorroData[defensaIdx]) - (gastoData[ataqueIdx]-ahorroData[ataqueIdx]) )/1000).toFixed(0);
+                const container = document.getElementById('pos-kpis');
+                if(!container) return;
+                container.innerHTML='';
+                const kpis=[
+                    { label:'Línea con mayor liberación', value: labels[idxMaxAhorro]||'-' },
+                    { label:'Línea con mayor nueva masa', value: labels[idxMaxGasto]||'-' },
+                    { label:'Ratio Redistribución', value: redistribucionRatio },
+                    { label:'Delta Neto DEF vs ATA (k£)', value: deltaDefAta }
+                ];
+                kpis.forEach(k=>{
+                    const card=document.createElement('div');
+                    card.className='card text-center';
+                    card.innerHTML=`<h3 class="text-sm font-semibold text-gray-300 mb-2">${k.label}</h3><p class="text-xl font-bold">${k.value}</p>`;
+                    container.appendChild(card);
+                });
+            } catch(err){ console.error('Error KPIs posicionales', err); }
+        }
+        function updatePositionalBadges(ahorroData, gastoData){
+            try {
+                const labels = ['Portería','Defensa','Mediocampo','Delantera'];
+                const container = document.getElementById('pos-badges'); if(!container) return; container.innerHTML='';
+                labels.forEach((label,i)=>{
+                    const net = (gastoData[i] - ahorroData[i]);
+                    const type = net>0 ? 'Reinversión Neta' : (net<0 ? 'Liberación Neta' : 'Neutro');
+                    const color = net>0 ? 'bg-gray-700/40 text-gray-200 border-gray-600/60' : (net<0 ? 'bg-red-600/20 text-red-400 border-red-600/40' : 'bg-gray-700/30 text-gray-300 border-gray-600/40');
+                    const badge = document.createElement('div');
+                    badge.className = `px-4 py-2 rounded-full border text-xs font-semibold tracking-wide ${color}`;
+                    badge.textContent = `${label}: ${type}`;
+                    container.appendChild(badge);
+                });
+            } catch(err){ console.error('Badges posiciones', err); }
+        }
+        function updatePositionalStackChart(ahorroData, gastoData){
+            try {
+                const ctx = document.getElementById('positionalStackChart').getContext('2d');
+                const totalA = ahorroData.reduce((a,b)=>a+b,0) || 1;
+                const totalG = gastoData.reduce((a,b)=>a+b,0) || 1;
+                const ahorroPct = ahorroData.map(v=> (v/totalA*100));
+                const gastoPct = gastoData.map(v=> (v/totalG*100));
+                const labels = ['Portería','Defensa','Mediocampo','Delantera'];
+                if(!positionalStackChart){
+                    positionalStackChart = new Chart(ctx, {
+                        type:'bar',
+                        data:{ labels, datasets:[
+                            { label:'% Ahorro', data: ahorroPct, backgroundColor:'rgba(120,120,120,0.55)', borderColor:'rgba(160,160,160,0.9)', borderWidth:1, stack:'stack1' },
+                            { label:'% Gasto', data: gastoPct, backgroundColor:'rgba(218,41,28,0.55)', borderColor:'#DA291C', borderWidth:1, stack:'stack1' }
+                        ]},
+                        options:{
+                            responsive:true, maintainAspectRatio:false,
+                            scales:{
+                                x:{ stacked:true, ticks:{ color:'#bbb' }, grid:{ display:false } },
+                                y:{ stacked:true, ticks:{ color:'#bbb', callback: v=> v+'%' }, grid:{ color:'#222' }, max:100 }
+                            },
+                            plugins:{ legend:{ position:'bottom', labels:{ color:'#fff' } }, tooltip:{ callbacks:{ label: c=> c.dataset.label+': '+c.parsed.y.toFixed(1)+'%' } } }
+                        }
+                    });
+                } else {
+                    positionalStackChart.data.datasets[0].data = ahorroPct;
+                    positionalStackChart.data.datasets[1].data = gastoPct;
+                    positionalStackChart.update();
+                }
+            } catch(err){ console.error('Stack chart posiciones', err); }
+        }
+        function updateOperativeKpis(players, totalAhorro, totalGasto){
+            try {
+                const cont = document.getElementById('ops-kpis'); if(!cont) return;
+                const salidas = players.filter(p=>p.type==='salida');
+                const llegadas = players.filter(p=>p.type==='llegada');
+                const countSalidas = salidas.length;
+                const countLlegadas = llegadas.length;
+                const avgAhorro = countSalidas ? (totalAhorro / countSalidas) : 0;
+                const avgGasto = countLlegadas ? (totalGasto / countLlegadas) : 0;
+                const ratioAhorroGasto = totalGasto ? (totalAhorro/totalGasto).toFixed(2)+'x' : '—';
+                const uiData = UI_CACHE?.[window.currentLang];
+                const k = uiData?.kpisOperativos || {};
+                const kpis = [
+                    { key:'numSalidas', fallback:'Nº Salidas', value: countSalidas },
+                    { key:'numFichajes', fallback:'Nº Fichajes', value: countLlegadas },
+                    { key:'ahorroMedio', fallback:'Ahorro Medio', value: formatCurrency(Math.round(avgAhorro)) },
+                    { key:'salarioMedioFichajes', fallback:'Salario Medio Fichajes', value: formatCurrency(Math.round(avgGasto)) },
+                    { key:'ratioAhorroGasto', fallback:'Ratio Ahorro / Gasto', value: ratioAhorroGasto },
+                    { key:'balanceNetoOp', fallback:'Balance Neto', value: (totalAhorro-totalGasto)>=0? '+'+formatCurrency(totalAhorro-totalGasto):formatCurrency(totalAhorro-totalGasto) }
+                ].map(item=>({ label: k[item.key]||item.fallback, value:item.value }));
+                cont.innerHTML='';
+                kpis.forEach(k=>{
+                    const div=document.createElement('div');
+                    div.className='card text-center';
+                    div.innerHTML=`<h3 class="text-xs font-semibold text-gray-300 mb-2 tracking-wide">${k.label}</h3><p class="text-xl font-bold ${/Balance/.test(k.label)? ((totalAhorro-totalGasto)>=0?'mu-green-text':'mu-red') : ''}">${k.value}</p>`;
+                    cont.appendChild(div);
+                });
+            } catch(err){ console.error('KPIs operativos', err); }
+        }
+        function updatePlayerFlowChart(salidasData, llegadasData) { playerFlowChart.data.datasets[0].data = salidasData; playerFlowChart.data.datasets[1].data = llegadasData; playerFlowChart.update(); }
+        function updateSalaryStructureCharts(salidasData, llegadasData) { 
+            salaryStructureOutChart.data.datasets[0].data = salidasData; 
+            salaryStructureInChart.data.datasets[0].data = llegadasData; 
+            salaryStructureOutChart.update();
+            salaryStructureInChart.update();
+        }
+        // Llenar tabla comparativa de estructura salarial
+        function updateTablaEstructuraSalarial(salidasPorTier, llegadasPorTier) {
+            const tipos = Object.values(SALARY_TIERS);
+            const tbody = document.getElementById('tabla-estructura-salarial');
+            if (!tbody) return;
+            tbody.innerHTML = tipos.map((tier, i) => `
+                <tr class="border-b border-gray-700">
+                    <td class="p-3 font-semibold">${tier.label}</td>
+                    <td class="p-3">${salidasPorTier[i]}</td>
+                    <td class="p-3">${llegadasPorTier[i]}</td>
+                </tr>
+            `).join('');
+        }
+        
+        // i18n análisis (carga diferida)
+    let ANALYSIS_CACHE = {}; // lang -> data
+    const ANALYSIS_LANG_DEFAULT = 'es';
+    // Inicializar idioma intentando recuperar preferencia previa antes de fijar por defecto
+    try {
+        const savedLangInit = localStorage.getItem('mu_lang');
+        window.currentLang = (savedLangInit && ['es','en'].includes(savedLangInit)) ? savedLangInit : ANALYSIS_LANG_DEFAULT;
+    } catch(_e){
+        window.currentLang = ANALYSIS_LANG_DEFAULT;
+    }
+        async function loadAnalysisLang(lang){
+            if(ANALYSIS_CACHE[lang]) return ANALYSIS_CACHE[lang];
+            try {
+                const res = await fetch(`i18n/analysis.${lang}.json`);
+                if(!res.ok) throw new Error('HTTP '+res.status);
+                const json = await res.json();
+                ANALYSIS_CACHE[lang]=json; return json;
+            } catch(err){ console.error('Error cargando análisis '+lang, err); return null; }
+        }
+        function interpolate(template, map){
+            return template.replace(/\{\{(.*?)\}\}/g,(m,k)=> (k in map)? map[k]: m);
+        }
+    async function updateAnalisis(filter, metrics, lang=window.currentLang||ANALYSIS_LANG_DEFAULT){
+            const container=document.getElementById('analisis-card'); if(!container) return;
+            const data = await loadAnalysisLang(lang); if(!data){ container.innerHTML='<p class="text-red-500">Error cargando análisis.</p>'; return; }
+            const key = data[filter] ? filter : 'all';
+            const copy = data[key];
+            // Derivados para placeholders
+            const labelsPos=['Portería','Defensa','Mediocampo','Delantera'];
+            const posTopRelease = labelsPos[ metrics.ahorroPos.indexOf(Math.max(...metrics.ahorroPos)) ] || '-';
+            const posTopInvest = labelsPos[ metrics.gastoPos.indexOf(Math.max(...metrics.gastoPos)) ] || '-';
+            const mapBase = {
+                countSalidas: metrics.countSalidas,
+                countLlegadas: metrics.countLlegadas,
+                totalAhorro: formatCurrency(metrics.totalAhorro),
+                totalGasto: formatCurrency(metrics.totalGasto),
+                balanceFmt: (metrics.balance>=0?'+':'')+formatCurrency(metrics.balance),
+                avgAhorro: formatCurrency(Math.round(metrics.avgAhorro||0)),
+                avgGasto: formatCurrency(Math.round(metrics.avgGasto||0)),
+                ratioAG: metrics.ratioAG,
+                posTopRelease,
+                posTopInvest
+            };
+            const sectionsHtml = copy.sections.map(sec=>{
+                return `<section class='mb-6'><h4 class='text-lg md:text-xl font-semibold mb-2 text-white'>${sec.header}</h4><p class='text-gray-300 text-sm md:text-base leading-relaxed'>${interpolate(sec.tpl, mapBase)}</p></section>`;
+            }).join('');
+            container.innerHTML = `<h3 class='text-xl md:text-2xl font-bold mb-4 mu-red'>${copy.title}</h3><p class='text-gray-400 italic text-sm md:text-base mb-6'>${copy.intro}</p>${sectionsHtml}`;
+        }
+
+        // Observaciones y Glosario externos
+        let NOTES_CACHE = {}; // lang -> notes
+        let GLOSSARY_CACHE = {}; // lang -> glossary
+        async function loadNotes(lang){
+            if(NOTES_CACHE[lang]) return NOTES_CACHE[lang];
+            try{ const r=await fetch(`i18n/notes.${lang}.json`); if(!r.ok) throw 0; const j=await r.json(); NOTES_CACHE[lang]=j; return j; }catch(e){ console.error('Notes load error', e); return null; }
+        }
+        async function loadGlossary(lang){
+            if(GLOSSARY_CACHE[lang]) return GLOSSARY_CACHE[lang];
+            try{ const r=await fetch(`i18n/glossary.${lang}.json`); if(!r.ok) throw 0; const j=await r.json(); GLOSSARY_CACHE[lang]=j; return j; }catch(e){ console.error('Glossary load error', e); return null; }
+        }
+        async function renderObservaciones(lang=window.currentLang||'es'){
+            const cont=document.getElementById('observaciones-container'); if(!cont) return;
+            const data = await loadNotes(lang); if(!data){ cont.innerHTML='<p class="text-red-500 text-xs">Error cargando observaciones.</p>'; return; }
+            cont.innerHTML = data.observaciones.map(o=>`<div class='flex gap-2'><span class='text-[10px] uppercase tracking-wider text-gray-500 font-semibold'>${o.cat}</span><p class='flex-1'>${o.text}</p></div>`).join('');
+        }
+        async function renderGlosario(lang=window.currentLang||'es'){
+            const cont=document.getElementById('glosario-container'); if(!cont) return;
+            const data = await loadGlossary(lang); if(!data){ cont.innerHTML='<p class="text-red-500 text-xs">Error cargando glosario.</p>'; return; }
+            cont.innerHTML = data.glosario.map(g=>`<div class='bg-black/40 border border-gray-800 rounded-lg p-3'><h5 class='font-semibold text-white text-sm mb-1'>${g.term}</h5><p class='text-gray-400 text-[11px] leading-snug'>${g.def}</p></div>`).join('');
+        }
+
+        // UI labels i18n
+        let UI_CACHE = {}; // lang -> data
+        async function loadUI(lang){
+            if(UI_CACHE[lang]) return UI_CACHE[lang];
+            try{ const r=await fetch(`i18n/ui.${lang}.json`); if(!r.ok) throw 0; const j=await r.json(); UI_CACHE[lang]=j; return j; }catch(e){ console.error('UI load error', e); return null; }
+        }
+        // Modular UI domain loaders (balance etc.)
+        let UI_DOMAIN_CACHE = {}; // { lang: { balance: {...} } }
+        async function loadUiDomain(domain, lang){
+            UI_DOMAIN_CACHE[lang] = UI_DOMAIN_CACHE[lang] || {};
+            if(UI_DOMAIN_CACHE[lang][domain]) return UI_DOMAIN_CACHE[lang][domain];
+            try {
+                const r = await fetch(`i18n/ui.${domain}.${lang}.json`);
+                if(!r.ok) throw 0;
+                const j = await r.json();
+                UI_DOMAIN_CACHE[lang][domain]=j;
+                return j;
+            } catch(err){
+                console.warn('UI domain load error', domain, lang, err);
+                return null;
+            }
+        }
+        function applyChartTranslations(lang){
+            try {
+                const domain = UI_DOMAIN_CACHE?.[lang]?.charts; // contenido de ui.charts.[lang].json
+                if(!domain) return;
+                const ch = domain.charts; if(!ch) return;
+                if(ch.balance && ch.balance.labels && Array.isArray(ch.balance.labels) && salaryChart){
+                    salaryChart.data.labels = ch.balance.labels;
+                    salaryChart.update();
+                }
+                if(ch.evolution && ch.evolution.datasetLabel && salaryEvolutionChart){
+                    salaryEvolutionChart.data.datasets[0].label = ch.evolution.datasetLabel;
+                    salaryEvolutionChart.update();
+                }
+            } catch(e){ console.warn('applyChartTranslations error', e); }
+        }
+        async function applyUiTranslations(lang){
+            const data = await loadUI(lang); if(!data) return;
+            const [balanceDomain, chartsDomain, _evolutionLoaded, _big6Loaded, _posicionLoaded, _estructuraLoaded, _finanzasLoaded] = await Promise.all([
+                loadUiDomain('balance', lang),
+                loadUiDomain('charts', lang),
+                loadUiDomain('evolution', lang),
+                loadUiDomain('big6', lang),
+                loadUiDomain('posicion', lang),
+                loadUiDomain('estructura', lang),
+                loadUiDomain('finanzas', lang)
+            ]);
+            const evolutionDomain = UI_DOMAIN_CACHE?.[lang]?.evolution;
+            const big6Domain = UI_DOMAIN_CACHE?.[lang]?.big6;
+            const posicionDomain = UI_DOMAIN_CACHE?.[lang]?.posicion;
+            const estructuraDomain = UI_DOMAIN_CACHE?.[lang]?.estructura;
+            const finanzasDomain = UI_DOMAIN_CACHE?.[lang]?.finanzas;
+            // Helper genérico para data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el=>{
+                const key=el.getAttribute('data-i18n');
+                const [domain, sub] = key.split('.');
+                if(data[domain] && data[domain][sub]) el.textContent = data[domain][sub];
+                else if(balanceDomain && balanceDomain[domain] && balanceDomain[domain][sub]) el.textContent = balanceDomain[domain][sub];
+            });
+            // Nav links
+            const navMap = {
+                '#filtros':'filtros', '#balance':'balance', '#finanzas':'finanzas', '#evolucion':'evolucion', '#big6':'big6', '#posicion':'posiciones', '#estructura':'estructura', '#operaciones':'operaciones', '#analisis':'analisis', '#observaciones':'observaciones', '#glosario':'glosario'
+            };
+            document.querySelectorAll('.sidebar-link, .carousel-link').forEach(a=>{
+                const href=a.getAttribute('href');
+                if(navMap[href]) a.textContent = data.nav[navMap[href]] || a.textContent;
+                if(href==='method.html'){ a.textContent = data.nav.metodologia || a.textContent; }
+            });
+            // Forzar actualización de cualquier span residual de branding
+            const brandSpans = document.querySelectorAll('[data-brand-salarios]');
+            brandSpans.forEach(sp=>{ sp.textContent = (lang==='en' ? (data.nav.salariosTag||'Salaries') : (data.nav.salariosTag||'Salarios')); });
+            // Section headings (using IDs)
+            const sectionTitles = [
+                { sel:'#hero h1', key:'hero.title' },
+                { sel:'#balance h3', key:'balance.title' },
+                { sel:'#finanzas h3', key:'finanzas.title' },
+                { sel:'#evolucion h3', key:'evolucion.title' },
+                { sel:'#big6 h3', key:'big6.title' },
+                { sel:'#posicion h2', key:'posicion.title' },
+                { sel:'#estructura h2', key:'estructura.title' },
+                { sel:'#operaciones h2', key:'operaciones.title' },
+                { sel:'#observaciones h3', key:'observaciones.title' },
+                { sel:'#glosario h3', key:'glosario.title' }
+            ];
+            sectionTitles.forEach(it=>{ const el=document.querySelector(it.sel); if(el && data.sections[it.key]) el.textContent=data.sections[it.key]; });
+            // Hero paragraph & filter microcopy (HTML permite spans)
+            const heroIntro = document.querySelector('#hero p');
+            if(heroIntro && data.sections['hero.intro']) heroIntro.innerHTML = data.sections['hero.intro'];
+            const heroFilterTitle = document.querySelector('#hero h3');
+            if(heroFilterTitle && data.sections['hero.filterTitle']) heroFilterTitle.textContent = data.sections['hero.filterTitle'];
+            const heroHint = document.querySelector('#hero p.mt-3');
+            if(heroHint && data.sections['hero.filterHint']) heroHint.textContent = data.sections['hero.filterHint'];
+            // Filter buttons
+            if(data.filters){
+                const map = [ ['all','all'], ['24-25','24_25'], ['25-26','25_26'] ];
+                map.forEach(([val,key])=>{ 
+                    const btn=document.querySelector(`button[data-filter='${val}']`); 
+                    if(btn && data.filters[key]){
+                        const spans = btn.querySelectorAll('span');
+                        if(spans.length===2){
+                            // Desktop (hidden md:inline) y mobile (md:hidden)
+                            if(val==='all'){
+                                spans[0].textContent = lang==='en' ? 'Total (Since 2024)' : 'Total (Desde 2024)';
+                                spans[1].textContent = lang==='en' ? 'Total' : 'Todo';
+                            } else if(val==='24-25'){
+                                spans[0].textContent = lang==='en' ? 'Season 24/25' : 'Temporada 24/25';
+                                spans[1].textContent = '24/25';
+                            } else if(val==='25-26'){
+                                spans[0].textContent = lang==='en' ? 'Season 25/26' : 'Temporada 25/26';
+                                spans[1].textContent = '25/26';
+                            }
+                        } else {
+                            btn.textContent = data.filters[key];
+                        }
+                    }
+                });
+            }
+            // KPI principales (balance) ya cubiertos por data-i18n excepto sub-labels semanales
+            if(data.kpis){
+                document.querySelectorAll('[data-i18n="kpis.semanales"]').forEach(el=>{ el.textContent=data.kpis.semanales; });
+            }
+            // (Botones de orden/exportar eliminados)
+            const kpisNote=document.querySelector('#operaciones .text-center.text-xs.text-gray-500.mb-3'); if(kpisNote && data.kpis.kpisOperativosNote) kpisNote.textContent=data.kpis.kpisOperativosNote;
+            // Hint toggle eliminado
+            // Footer
+            if(data.footer){
+                const ftTitle = document.querySelector('[data-footer-title]'); if(ftTitle && data.footer.fuentesTitulo) ftTitle.textContent = data.footer.fuentesTitulo;
+                const ftText = document.querySelector('[data-footer-text]'); if(ftText && data.footer.fuentesTexto) ftText.innerHTML = data.footer.fuentesTexto;
+                const ftCred = document.querySelector('[data-footer-credits]'); if(ftCred && data.footer.creditos) ftCred.innerHTML = data.footer.creditos;
+            }
+            // Finanzas domain (intro / footnote se aplican dinámicamente al recalcular KPIs)
+            if(finanzasDomain && finanzasDomain.finanzas){
+                const fz = finanzasDomain.finanzas;
+                const introEl = document.querySelector('[data-fin-intro]'); if(introEl && fz.intro) introEl.textContent = fz.intro;
+                const footEl = document.querySelector('[data-fin-footnote]'); if(footEl && fz.footnote) footEl.textContent = fz.footnote;
+                // Re-render si ya existen métricas
+                if(window.__finMetrics){
+                    const { weeklyNet, annualised, revenueMid, ebitdaMid, pctRevenue, pctEbitda } = window.__finMetrics;
+                    const kpiCfg = fz.kpis || {};
+                    const finKpis = document.getElementById('fin-kpis');
+                    if(finKpis){
+                        const kpis = [
+                            { label: kpiCfg.ahorroSemanal||'Net Weekly Saving', value: (weeklyNet>=0?'+':'')+formatCurrency(weeklyNet) },
+                            { label: kpiCfg.ahorroAnual||'Annualised Saving', value: (annualised>=0?'+':'')+formatCurrency(annualised) },
+                            { label: kpiCfg.ingresosProyectados||'Projected Revenue', value: formatCurrency(revenueMid) },
+                            { label: kpiCfg.porcIngresos||'% of Revenue', value: pctRevenue.toFixed(2)+'%' },
+                            { label: kpiCfg.ebitdaGuia||'EBITDA Guidance (mid)', value: formatCurrency(ebitdaMid) },
+                            { label: kpiCfg.porcEbitda||'% of EBITDA', value: pctEbitda.toFixed(2)+'%' }
+                        ];
+                        finKpis.innerHTML='';
+                        kpis.forEach(k=>{
+                            const div=document.createElement('div');
+                            div.className='card text-center';
+                            const posClass = /Saving|Ahorro|Annual/.test(k.label) ? (annualised>=0?'mu-green-text':'mu-red') : '';
+                            div.innerHTML=`<h3 class="text-xs font-semibold text-gray-300 mb-2 tracking-wide">${k.label}</h3><p class="text-lg font-bold ${posClass}">${k.value}</p>`;
+                            finKpis.appendChild(div);
+                        });
+                    }
+                    // Re-interpolar análisis
+                    if(fz.analysisTpl){
+                        let qualifierKey;
+                        const absPctRev = Math.abs(pctRevenue);
+                        if(annualised<0){ qualifierKey='negative'; }
+                        else if(absPctRev < 0.5){ qualifierKey='marginal'; }
+                        else if(absPctRev < 1.5){ qualifierKey='meaningful'; }
+                        else { qualifierKey='material'; }
+                        const qualifier = fz.qualifiers?.[qualifierKey] || '';
+                        const map = {
+                            weeklySaving: (weeklyNet>=0?'+':'')+formatCurrency(weeklyNet),
+                            annualSaving: (annualised>=0?'+':'')+formatCurrency(annualised),
+                            pctRevenue: pctRevenue.toFixed(2)+'%',
+                            pctEbitda: pctEbitda.toFixed(2)+'%',
+                            revMidM: (revenueMid/1_000_000).toFixed(1),
+                            ebitdaMidM: (ebitdaMid/1_000_000).toFixed(1),
+                            qualifier
+                        };
+                        let html = fz.analysisTpl; Object.entries(map).forEach(([k,v])=> html = html.replace('{'+k+'}', v));
+                        const analysisEl=document.querySelector('[data-fin-analysis]'); if(analysisEl) analysisEl.innerHTML=html;
+                    }
+                }
+            }
+            // Ajustar headers dinámicos según tabla (data-i18n ya cubre claves base)
+            if(data.kpis){
+                const salidasHead = document.querySelector('#salidas-tbody')?.closest('table')?.querySelector('thead tr th:last-child');
+                if(salidasHead) salidasHead.textContent=data.kpis.ahorroSemanal;
+                const llegadasHead = document.querySelector('#llegadas-tbody')?.closest('table')?.querySelector('thead tr th:last-child');
+                if(llegadasHead) llegadasHead.textContent=data.kpis.salarioSemanal;
+            }
+            // Balance domain specifics (si existe)
+            if(balanceDomain && balanceDomain.balance){
+                const bal = balanceDomain.balance;
+                const balTitle = document.querySelector('#balance h3.text-xl');
+                if(balTitle && bal.title) balTitle.textContent = bal.title;
+                // KPIs
+                const ahorroH = document.querySelector('#balance [data-i18n="kpis.ahorroPorSalidas"]'); if(ahorroH && bal.kpiAhorro) ahorroH.textContent=bal.kpiAhorro;
+                const gastoH = document.querySelector('#balance [data-i18n="kpis.gastoEnFichajes"]'); if(gastoH && bal.kpiGasto) gastoH.textContent=bal.kpiGasto;
+                const balanceH = document.querySelector('#balance [data-i18n="kpis.balanceNeto"]'); if(balanceH && bal.kpiBalance) balanceH.textContent=bal.kpiBalance;
+                document.querySelectorAll('#balance [data-i18n="kpis.semanales"]').forEach(el=>{ if(bal.subWeekly) el.textContent=bal.subWeekly; });
+                // Center chart plugin label override
+                window.__balanceCenterLabel = bal.chartCenterLabel || (lang==='en'?'Net Balance':'Balance Neto');
+                if(salaryChart) salaryChart.update();
+            }
+            // Evolution domain
+            if(evolutionDomain && evolutionDomain.evolution){
+                const evo = evolutionDomain.evolution;
+                // Título
+                const evoTitleEl = document.querySelector('[data-evo-title]');
+                if(evoTitleEl && evo.title) evoTitleEl.textContent = evo.title;
+                // Datos base del gráfico para placeholders
+                if(salaryEvolutionChart){
+                    const ds = salaryEvolutionChart.data.datasets[0].data;
+                    const labels = salaryEvolutionChart.data.labels;
+                    const peakVal = Math.max(...ds);
+                    const peakIdx = ds.indexOf(peakVal);
+                    const peakSeason = labels[peakIdx];
+                    const currentVal = ds[ds.length-1];
+                    const currentSeason = labels[labels.length-1];
+                    const dropPct = (( (peakVal-currentVal)/peakVal )*100).toFixed(1)+"%";
+                    // Ranking (1 = mayor)
+                    const sortedDesc=[...ds].sort((a,b)=>b-a);
+                    const rank=sortedDesc.indexOf(currentVal)+1;
+                    // Statement rank (por ahora fijo secondLowest si rank== (ds.length-1) ó coincide caso)
+                    let rankStatement = evo.rankStatements?.secondLowest || '';
+                    // Mapear placeholders
+                    const paragraphTpl = evo.paragraph;
+                    if(paragraphTpl){
+                        const html = paragraphTpl
+                          .replace('{rangeGrowth}','20/21 → 22/23')
+                          .replace('{peakValue}', formatCurrency(peakVal).replace('£','£'))
+                          .replace('{peakSeason}', peakSeason)
+                          .replace('{season2324}','23/24 (Pre-INEOS)')
+                          .replace('{val2324}', formatCurrency(ds[labels.indexOf('23/24 (Pre-INEOS)')]))
+                          .replace('{season2425}','24/25')
+                          .replace('{val2425}', formatCurrency(ds[labels.indexOf('24/25')]))
+                          .replace('{season2526}','25/26')
+                          .replace('{val2526}', formatCurrency(currentVal))
+                          .replace('{rankStatement}', rankStatement)
+                          .replace('{dropPct}', dropPct)
+                          .replace('{capology}', evo.sourceCapology || '');
+                        const pEl=document.querySelector('[data-evo-paragraph]'); if(pEl) pEl.innerHTML=html;
+                    } else {
+                        console.warn('Evolución: template de párrafo no encontrado en dominio evolution');
+                        const pEl=document.querySelector('[data-evo-paragraph]');
+                        if(pEl && pEl.textContent.trim()==='...'){
+                            pEl.textContent = lang==='en' ? 'Evolution data loaded.' : 'Evolución cargada.';
+                        }
+                    }
+                    // Métricas labels
+                    const peakLabelEl=document.querySelector('[data-evo-metric-peak-label]'); if(peakLabelEl) peakLabelEl.textContent=(evo.metrics?.peak||'Peak ({peakSeason})').replace('{peakSeason}', peakSeason);
+                    const currentLabelEl=document.querySelector('[data-evo-metric-current-label]'); if(currentLabelEl) currentLabelEl.textContent=(evo.metrics?.current||'Current ({currentSeason})').replace('{currentSeason}', currentSeason);
+                    const redLabelEl=document.querySelector('[data-evo-metric-reduction-label]'); if(redLabelEl) redLabelEl.textContent=evo.metrics?.reduction||'Reduction vs Peak';
+                    const rankLabelEl=document.querySelector('[data-evo-metric-rank-label]'); if(rankLabelEl) rankLabelEl.textContent=evo.metrics?.rank||'Historical Position';
+                }
+            }
+            // Charts domain (leyendas / labels dinámicos)
+            applyChartTranslations(lang);
+            // Big Six domain
+            if(big6Domain && big6Domain.big6){
+                const b = big6Domain.big6;
+                const titleEl=document.querySelector('[data-big6-title]'); if(titleEl && b.title) titleEl.textContent=b.title;
+                // Obtener datos del gráfico para interpolar (usar valores originales del dataset si existen)
+                try {
+                    if(window.__bigSixRaw){
+                        const raw = window.__bigSixRaw; // array original antes de ordenar
+                        const city = raw.find(r=>r.short==='City');
+                        const united = raw.find(r=>r.short==='United');
+                        const liverpool = raw.find(r=>r.short==='Liverpool');
+                        const arsenal = raw.find(r=>r.short==='Arsenal');
+                        const chelsea = raw.find(r=>r.short==='Chelsea');
+                        const spurs = raw.find(r=>r.short==='Spurs');
+                        const cluster = [arsenal,liverpool,chelsea].filter(Boolean).map(o=>o.value).sort((a,b)=>a-b);
+                        const alcLow = cluster[0];
+                        const alcHigh = cluster[cluster.length-1];
+                        const avgChasing = cluster.reduce((s,v)=>s+v,0)/cluster.length;
+                        const gapToCityPct = united && city ? ((united.value-city.value)/city.value*100).toFixed(1)+'%' : '';
+                        const gapToChasingPct = united && avgChasing ? ((united.value-avgChasing)/avgChasing*100).toFixed(1)+'%' : '';
+                        const fmtM = v => '£'+(v/1000000).toFixed(2)+'M';
+                        const map = {
+                            unitedValueM: united? fmtM(united.value):'',
+                            cityValueM: city? fmtM(city.value):'',
+                            alcRangeLowM: fmtM(alcLow),
+                            alcRangeHighM: fmtM(alcHigh),
+                            spursValueM: spurs? fmtM(spurs.value):'',
+                            gapToCityPct,
+                            gapToChasingPct
+                        };
+                        if(b.paragraph){
+                            let html = b.paragraph;
+                            Object.entries(map).forEach(([k,v])=>{ html = html.replace('{'+k+'}', v); });
+                            const pEl=document.querySelector('[data-big6-paragraph]'); if(pEl) pEl.innerHTML=html;
+                        }
+                    }
+                    // Tabla headers
+                    if(b.table){
+                        const thClub=document.querySelector('[data-big6-th-club]'); if(thClub) thClub.textContent=b.table.club||thClub.textContent;
+                        const thWeek=document.querySelector('[data-big6-th-weekly]'); if(thWeek) thWeek.textContent=b.table.weekly||thWeek.textContent;
+                        const thPctC=document.querySelector('[data-big6-th-pctcity]'); if(thPctC) thPctC.textContent=b.table.pctCity||thPctC.textContent;
+                        const thPctCh=document.querySelector('[data-big6-th-pctchasing]'); if(thPctCh) thPctCh.textContent=b.table.pctChasing||thPctCh.textContent;
+                    }
+                    // Dataset label (si el gráfico ya existe y dominio charts no lo cubre)
+                    if(window.bigSixChart && b.datasetLabel){
+                        bigSixChart.data.datasets[0].label = b.datasetLabel;
+                        bigSixChart.update();
+                    }
+                    // Footnote
+                    const foot=document.querySelector('[data-big6-footnote]'); if(foot && b.footnote) foot.textContent=b.footnote;
+                    // KPI métricas (gap vs city, ventaja vs chasing, ratio)
+                    if(b.metrics && window.__bigSixRaw){
+                        const raw = window.__bigSixRaw;
+                        const city = raw.find(r=>r.short==='City');
+                        const united = raw.find(r=>r.short==='United');
+                        const chasingCluster = raw.filter(r=>['Arsenal','Liverpool','Chelsea'].includes(r.short));
+                        const avgChasing = chasingCluster.reduce((s,o)=>s+o.value,0)/chasingCluster.length;
+                        const spurs = raw.find(r=>r.short==='Spurs');
+                        const gapCityPct = united && city ? ((united.value-city.value)/city.value*100).toFixed(1)+'%' : '';
+                        const gapChasingPct = united && avgChasing ? ((united.value-avgChasing)/avgChasing*100).toFixed(1)+'%' : '';
+                        const ratioSpurs = united && spurs ? (united.value/spurs.value).toFixed(2)+'x' : '';
+                        const lGapCity=document.querySelector('[data-big6-metric-gapcity]'); if(lGapCity) lGapCity.textContent=b.metrics.gapCity||lGapCity.textContent;
+                        const lGapChasing=document.querySelector('[data-big6-metric-gapchasing]'); if(lGapChasing) lGapChasing.textContent=b.metrics.gapChasing||lGapChasing.textContent;
+                        const lRatio=document.querySelector('[data-big6-metric-ratiospurs]'); if(lRatio) lRatio.textContent=b.metrics.ratioSpurs||lRatio.textContent;
+                        const vGapCity=document.getElementById('big6-gap-city'); if(vGapCity) vGapCity.textContent=gapCityPct;
+                        const vGapChasing=document.getElementById('big6-gap-chasing'); if(vGapChasing) vGapChasing.textContent=gapChasingPct;
+                        const vRatio=document.getElementById('big6-ratio-spurs'); if(vRatio) vRatio.textContent=ratioSpurs;
+                        if(vGapCity) vGapCity.className = 'text-lg font-semibold '+(gapCityPct.startsWith('-')?'mu-green-text':'mu-red');
+                        if(vGapChasing) vGapChasing.className='text-lg font-semibold '+(gapChasingPct.startsWith('-')?'mu-green-text':'mu-red');
+                    }
+                } catch(err){ console.warn('Big6 translation error', err); }
+            }
+            // Posición domain
+            if(posicionDomain && posicionDomain.posicion){
+                const pdom = posicionDomain.posicion;
+                const t=document.querySelector('[data-posicion-title]'); if(t && pdom.title) t.textContent=pdom.title;
+                const intro=document.querySelector('[data-posicion-intro]'); if(intro && pdom.intro) intro.innerHTML=pdom.intro;
+                // Re-render KPIs posicionales con labels traducidos (si ya existen datos previos)
+                if(window.__lastMetrics){
+                    try {
+                        const ahorroData = window.__lastMetrics.ahorroPos || [];
+                        const gastoData = window.__lastMetrics.gastoPos || [];
+                        // Forzamos regeneración KPIs posicionales manual para aplicar labels traducidos
+                        const container=document.getElementById('pos-kpis'); if(container){
+                            container.innerHTML='';
+                            const labelsBase = pdom.kpis;
+                            const labelsPos = pdom.positions || ['Portería','Defensa','Mediocampo','Delantera'];
+                            const ahorroPct = ahorroData.map(v=>v/(ahorroData.reduce((a,b)=>a+b,0)||1));
+                            const gastoPct = gastoData.map(v=>v/(gastoData.reduce((a,b)=>a+b,0)||1));
+                            const idxMaxAhorro = ahorroPct.indexOf(Math.max(...ahorroPct));
+                            const idxMaxGasto = gastoPct.indexOf(Math.max(...gastoPct));
+                            const redistribucionRatio = (( (window.__lastMetrics.totalGasto||0)/(window.__lastMetrics.totalAhorro||1) )).toFixed(2)+'x';
+                            const deltaDefAta = ( ((gastoData[1]||0)-(ahorroData[1]||0) - ((gastoData[3]||0)-(ahorroData[3]||0)) )/1000 ).toFixed(0);
+                            const kpis=[
+                              { label: labelsBase.maxRelease, value: labelsPos[idxMaxAhorro]||'-' },
+                              { label: labelsBase.maxNewMass, value: labelsPos[idxMaxGasto]||'-' },
+                              { label: labelsBase.redistributionRatio, value: redistribucionRatio },
+                              { label: labelsBase.deltaDefAtk, value: deltaDefAta }
+                            ];
+                            kpis.forEach(k=>{
+                                const card=document.createElement('div');
+                                card.className='card text-center';
+                                card.innerHTML=`<h3 class="text-sm font-semibold text-gray-300 mb-2">${k.label}</h3><p class="text-xl font-bold">${k.value}</p>`;
+                                container.appendChild(card);
+                            });
+                        }
+                        // Badges
+                        const badgesContainer=document.getElementById('pos-badges'); if(badgesContainer){
+                            badgesContainer.innerHTML='';
+                            const labelsPos = pdom.positions || ['Portería','Defensa','Mediocampo','Delantera'];
+                            labelsPos.forEach((label,i)=>{
+                                const net=( (window.__lastMetrics.gastoPos||[])[i] - (window.__lastMetrics.ahorroPos||[])[i] );
+                                const type = net>0 ? pdom.badges.reinversion : (net<0 ? pdom.badges.liberacion : pdom.badges.neutro);
+                                const color = net>0 ? 'bg-gray-700/40 text-gray-200 border-gray-600/60' : (net<0 ? 'bg-red-600/20 text-red-400 border-red-600/40' : 'bg-gray-700/30 text-gray-300 border-gray-600/40');
+                                const badge=document.createElement('div');
+                                badge.className=`px-4 py-2 rounded-full border text-xs font-semibold tracking-wide ${color}`;
+                                badge.textContent=`${label}: ${type}`;
+                                badgesContainer.appendChild(badge);
+                            });
+                        }
+                    } catch(e){ console.warn('Posición re-render error', e); }
+                }
+                // Charts posicionales (labels datasets + tooltips + position labels)
+                try {
+                    const positions = pdom.positions || ['Portería','Defensa','Mediocampo','Delantera'];
+                    if(posBalanceChart){
+                        posBalanceChart.data.labels = positions;
+                        if(pdom.charts?.balance?.datasets){
+                            posBalanceChart.data.datasets[0].label = pdom.charts.balance.datasets.ahorro;
+                            posBalanceChart.data.datasets[1].label = pdom.charts.balance.datasets.gasto;
+                        }
+                        if(pdom.charts?.balance?.tooltip){
+                            posBalanceChart.options.plugins.tooltip.callbacks.label = (c)=> pdom.charts.balance.tooltip.replace('{label}', c.dataset.label).replace('{value}', formatCurrency(c.raw));
+                        }
+                        posBalanceChart.update();
+                    }
+                    if(playerFlowChart){
+                        playerFlowChart.data.labels = positions;
+                        if(pdom.charts?.flow?.datasets){
+                            playerFlowChart.data.datasets[0].label = pdom.charts.flow.datasets.salidas;
+                            playerFlowChart.data.datasets[1].label = pdom.charts.flow.datasets.llegadas;
+                        }
+                        if(pdom.charts?.flow?.tooltip){
+                            playerFlowChart.options.plugins.tooltip.callbacks.label = (c)=> pdom.charts.flow.tooltip.replace('{label}', c.dataset.label).replace('{value}', c.raw);
+                        }
+                        playerFlowChart.update();
+                    }
+                    if(positionalStackChart){
+                        positionalStackChart.data.labels = positions;
+                        if(pdom.charts?.stack?.datasets){
+                            positionalStackChart.data.datasets[0].label = pdom.charts.stack.datasets.ahorro;
+                            positionalStackChart.data.datasets[1].label = pdom.charts.stack.datasets.gasto;
+                        }
+                        if(pdom.charts?.stack?.tooltip){
+                            positionalStackChart.options.plugins.tooltip.callbacks.label = (c)=> pdom.charts.stack.tooltip.replace('{label}', c.dataset.label).replace('{value}', (c.parsed.x||c.parsed.y));
+                        }
+                        positionalStackChart.update();
+                    }
+                } catch(e){ console.warn('Posición charts i18n error', e); }
+            }
+            // Estructura domain
+            if(estructuraDomain && estructuraDomain.estructura){
+                const ed = estructuraDomain.estructura;
+                const t=document.querySelector('[data-estructura-title]'); if(t && ed.title) t.textContent=ed.title;
+                const intro=document.querySelector('[data-estructura-intro]'); if(intro && ed.intro) intro.textContent=ed.intro;
+                const outTitle=document.querySelector('[data-estructura-out-title]'); if(outTitle && ed.charts?.out?.title) outTitle.textContent=ed.charts.out.title;
+                const inTitle=document.querySelector('[data-estructura-in-title]'); if(inTitle && ed.charts?.in?.title) inTitle.textContent=ed.charts.in.title;
+                const thTier=document.querySelector('[data-estructura-th-tier]'); if(thTier && ed.table?.colTier) thTier.textContent=ed.table.colTier;
+                const thSal=document.querySelector('[data-estructura-th-salidas]'); if(thSal && ed.table?.colSalidas) thSal.textContent=ed.table.colSalidas;
+                const thLle=document.querySelector('[data-estructura-th-llegadas]'); if(thLle && ed.table?.colLlegadas) thLle.textContent=ed.table.colLlegadas;
+                // Re-map tier labels (sin alterar min/max)
+                try {
+                    if(ed.tiers){
+                        Object.keys(SALARY_TIERS).forEach(k=>{ if(ed.tiers[k]) SALARY_TIERS[k].label = ed.tiers[k]; });
+                        // Actualizar labels en charts de estructura si existen
+                        if(salaryStructureOutChart){
+                            salaryStructureOutChart.data.labels = Object.values(SALARY_TIERS).map(t=>t.label);
+                            if(ed.charts?.out?.tooltip){
+                                salaryStructureOutChart.options.plugins.tooltip.callbacks.label = c=> ed.charts.out.tooltip.replace('{label}', c.label).replace('{value}', c.parsed);
+                            }
+                            salaryStructureOutChart.update();
+                        }
+                        if(salaryStructureInChart){
+                            salaryStructureInChart.data.labels = Object.values(SALARY_TIERS).map(t=>t.label);
+                            if(ed.charts?.in?.tooltip){
+                                salaryStructureInChart.options.plugins.tooltip.callbacks.label = c=> ed.charts.in.tooltip.replace('{label}', c.label).replace('{value}', c.parsed);
+                            }
+                            salaryStructureInChart.update();
+                        }
+                        // Regenerar tabla estructura (reutilizar datos previos si disponibles)
+                        if(window.__lastMetrics && document.getElementById('tabla-estructura-salarial')){
+                            // No tenemos conteos por tier guardados; simplemente relanzar updateDashboard para recalcular.
+                            // (Evitar loop infinito: sólo si no estamos ya dentro de un update masivo -> bandera)
+                        }
+                    }
+                } catch(e){ console.warn('Estructura tiers i18n error', e); }
+            }
+            // Regenerar KPIs operativos con etiquetas nuevas (usa estado actual ya filtrado)
+            try{
+                const currentPlayers = currentFilter==='all'? allPlayers : allPlayers.filter(p=>p.season===currentFilter);
+                const totalA = currentPlayers.filter(p=>p.type==='salida').reduce((s,p)=>s+p.salary,0);
+                const totalG = currentPlayers.filter(p=>p.type==='llegada').reduce((s,p)=>s+p.salary,0);
+                updateOperativeKpis(currentPlayers, totalA, totalG);
+            }catch(e){ console.warn('No se pudo regenerar KPIs operativos tras i18n', e); }
+        }
+
+    document.addEventListener('DOMContentLoaded', () => {
+            // Scrollspy: resaltar sección activa en sidebar y carrusel móvil
+            const sectionIds = ['filtros','balance','finanzas','evolucion','big6','posicion','estructura','operaciones','analisis','observaciones','glosario'];
+            const sidebarLinks = Array.from(document.querySelectorAll('.sidebar-link'));
+            const carouselLinks = Array.from(document.querySelectorAll('.carousel-link'));
+            const allNavLinks = [...sidebarLinks, ...carouselLinks];
+            const sectionMap = sectionIds.map(id => ({ id, el: document.getElementById(id) }));
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        allNavLinks.forEach(a => a.classList.remove('active-scroll'));
+                        allNavLinks.filter(a => a.getAttribute('href') === `#${id}`).forEach(a => a.classList.add('active-scroll'));
+                    }
+                });
+            }, { root: null, rootMargin: '0px 0px -60% 0px', threshold: 0.25 });
+            sectionMap.forEach(s => s.el && observer.observe(s.el));
+
+            // Filtros fijos al hacer scroll
+            const filtrosSection = document.getElementById('filtros');
+            if (filtrosSection) {
+                const placeholder = document.createElement('div');
+                let fixed = false;
+                const originalOffset = filtrosSection.offsetTop;
+                const filtrosHeight = () => filtrosSection.getBoundingClientRect().height;
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > originalOffset && !fixed) {
+                        placeholder.style.height = filtrosHeight() + 'px';
+                        filtrosSection.parentNode.insertBefore(placeholder, filtrosSection);
+                        filtrosSection.classList.add('filters-fixed');
+                        fixed = true;
+                    } else if (window.scrollY <= originalOffset && fixed) {
+                        filtrosSection.classList.remove('filters-fixed');
+                        if (placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
+                        fixed = false;
+                    }
+                });
+            }
+
+            const doughnutOptions = {
+                responsive: true, maintainAspectRatio: false, cutout: '60%',
+                plugins: { 
+                    tooltip: { callbacks: { label: (c) => `${c.raw} jugadores` } },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#fff', // Forzar blanco puro para la leyenda
+                            font: { weight: 'bold', family: 'Poppins' },
+                            boxWidth: 12,
+                            generateLabels: (chart) => {
+                                const { labels, datasets } = chart.data;
+                                if (!datasets.length || !datasets[0].data) return [];
+                                return labels.map((label, i) => {
+                                    const value = datasets[0].data[i];
+                                    if (value === 0) return null;
+                                    return {
+                                        text: `${label} (${value})`,
+                                        fillStyle: datasets[0].backgroundColor[i],
+                                        strokeStyle: datasets[0].borderColor[i],
+                                        lineWidth: datasets[0].borderWidth,
+                                        index: i
+                                    };
+                                }).filter(item => item !== null);
+                            }
+                        }
+                    }
+                }
+            };
+
+            try {
+                salaryChart = new Chart(document.getElementById('salaryChart').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { labels: ['L1','L2'], datasets: [{ data: [], backgroundColor: ['#4B5563', '#DA291C'], borderColor: '#1a1a1a', borderWidth: 4 }] },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#fff' } },
+                            tooltip: { callbacks: { label: (c) => {
+                                const domainCharts = UI_DOMAIN_CACHE?.[window.currentLang]?.charts?.charts;
+                                const tpl = domainCharts?.balance?.tooltip || '{label}: {value}';
+                                return tpl.replace('{label}', c.label).replace('{value}', formatCurrency(c.parsed));
+                            } } }
+                        }
+                    },
+                    plugins: [centerTextPlugin, forceLegendWhitePlugin]
+                });
+                // Ajustar labels según dominio charts cargado (si ya precargado idioma)
+                // Reaplicar traducciones de labels del dominio charts si ya cargado
+                applyChartTranslations(window.currentLang||'es');
+            } catch (e) { console.error("Error inicializando salaryChart:", e); }
+
+            // Gráfico de evolución masa salarial (histórico extendido)
+            try {
+                const evoCtx = document.getElementById('salaryEvolutionChart').getContext('2d');
+                const evoLabels = ['17/18','18/19','19/20','20/21','21/22','22/23','23/24 (Pre-INEOS)','24/25','25/26'];
+                const evoData = [3135900,2885400,3161538,3700192,4491923,4657500,3764346,3292750,3052000];
+                const peakVal = Math.max(...evoData);
+                const currentVal = evoData[evoData.length-1];
+                const sortedDesc = [...evoData].sort((a,b)=>b-a);
+                const rank = sortedDesc.indexOf(currentVal)+1; // 1=mayor
+                salaryEvolutionChart = new Chart(evoCtx, {
+                    type: 'line',
+                    data: {
+                        labels: evoLabels,
+                        datasets: [{
+                            label: 'Masa Salarial Semanal',
+                            data: evoData,
+                            tension: 0.35,
+                            borderColor: '#DA291C',
+                            backgroundColor: (ctx)=>{
+                                const gradient = ctx.chart.ctx.createLinearGradient(0,0,0,300);
+                                gradient.addColorStop(0,'rgba(218,41,28,0.35)');
+                                gradient.addColorStop(1,'rgba(218,41,28,0)');
+                                return gradient;
+                            },
+                            borderWidth: 3,
+                            pointBackgroundColor: evoData.map(v => v===currentVal ? '#DA291C' : '#fff'),
+                            pointBorderColor: evoData.map(v => v===currentVal ? '#fff' : '#DA291C'),
+                            pointRadius: evoData.map(v => v===currentVal ? 6 : 4),
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                ticks: { color:'#bbb', callback: v => '£' + (v/1000).toLocaleString('en-GB') + 'k' },
+                                grid: { color: '#222' }
+                            },
+                            x: { ticks:{ color:'#bbb' }, grid: { display:false } }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color:'#fff' } },
+                            tooltip: { callbacks: { label: c => formatCurrency(c.parsed.y) } }
+                        }
+                    }
+                });
+                const dropPct = ((currentVal - peakVal)/peakVal)*100; // negativo
+                document.getElementById('evo-drop').textContent = `${dropPct.toFixed(1)}%`;
+                document.getElementById('evo-rank').textContent = `${rank}º más alto`; // rank en orden descendente
+                // Removed non-existent evo-total-drop-label assignment
+                if (dropPct < 0) document.getElementById('evo-drop').classList.add('mu-green-text');
+            } catch(e) { console.error('Error inicializando salaryEvolutionChart (histórico):', e); }
+            // Tras crear evolution chart aplicar traducciones (incluye dominio evolution)
+            applyUiTranslations(window.currentLang||'es');
+
+            // Comparación Big Six 25/26
+            try {
+                const bigSixRaw = [
+                    { club:'Manchester City', short:'City', value:3719800, color:'#6CB4EE' },
+                    { club:'Manchester United', short:'United', value:3052000, color:'#DA291C' },
+                    { club:'Liverpool', short:'Liverpool', value:2970000, color:'#C8102E' },
+                    { club:'Arsenal', short:'Arsenal', value:2866000, color:'#EF0107' },
+                    { club:'Chelsea', short:'Chelsea', value:2833000, color:'#034694' },
+                    { club:'Tottenham Hotspur', short:'Spurs', value:2112500, color:'#132257' }
+                ];
+                window.__bigSixRaw = bigSixRaw;
+                // Orden por valor descendente para gráfico
+                const ordered = [...bigSixRaw].sort((a,b)=>b.value-a.value);
+                const ctxBig6 = document.getElementById('bigSixChart').getContext('2d');
+                window.bigSixChart = new Chart(ctxBig6, {
+                    type: 'bar',
+                    data: {
+                        labels: ordered.map(o=>o.short),
+                        datasets: [{
+                            label: '',
+                            data: ordered.map(o=>o.value),
+                            backgroundColor: ordered.map(o=> o.short==='United' ? 'rgba(218,41,28,0.9)' : 'rgba(255,255,255,0.12)'),
+                            borderColor: ordered.map(o=> o.short==='United' ? '#DA291C' : '#555'),
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            maxBarThickness: 64
+                        }]
+                    },
+                    options: {
+                        responsive:true,
+                        maintainAspectRatio:false,
+                        scales: {
+                            y: { grid: { color:'#222' }, ticks:{ color:'#bbb', callback:v=>'£'+(v/1000000).toFixed(2)+'M' } },
+                            x: { grid:{ display:false }, ticks:{ color:'#bbb' } }
+                        },
+                        plugins: {
+                            legend:{ display:false },
+                            tooltip:{ callbacks:{ label:c=> formatCurrency(c.parsed.y) } },
+                            annotation: {}
+                        }
+                    }
+                });
+                // Tabla
+                const tableBody = document.getElementById('big6-table');
+                const cityVal = bigSixRaw.find(c=>c.short==='City').value;
+                bigSixRaw.forEach(item=>{
+                    const others = bigSixRaw.filter(c=>c!==item);
+                    const avgOthers = others.reduce((s,c)=>s+c.value,0)/others.length;
+                    const tr = document.createElement('tr');
+                    tr.className='hover:bg-white/5 transition';
+                    tr.innerHTML = `
+                        <td class="p-2 md:p-3 text-left font-medium ${item.short==='United' ? 'text-white' : 'text-gray-300'}">${item.club}</td>
+                        <td class="p-2 md:p-3">${formatCurrency(item.value)}</td>
+                        <td class="p-2 md:p-3 ${item.value<cityVal ? 'mu-green-text':'mu-red'}">${((item.value-cityVal)/cityVal*100).toFixed(1)}%</td>
+                        <td class="p-2 md:p-3 ${item.value<avgOthers ? 'mu-green-text':'mu-red'}">${((item.value-avgOthers)/avgOthers*100).toFixed(1)}%</td>`;
+                    tableBody.appendChild(tr);
+                });
+                // Reaplicar traducciones ahora que bigSixChart existe
+                applyUiTranslations(window.currentLang||'es');
+                // Métricas claves United
+                const united = bigSixRaw.find(c=>c.short==='United');
+                const chasingGroup = ['Arsenal','Liverpool','Chelsea'];
+                const chasingAvg = bigSixRaw.filter(c=>chasingGroup.includes(c.club)).reduce((s,c)=>s+c.value,0)/chasingGroup.length;
+                const spurs = bigSixRaw.find(c=>c.short==='Spurs');
+                document.getElementById('big6-gap-city').textContent = ((united.value-cityVal)/cityVal*100).toFixed(1)+'%';
+                document.getElementById('big6-gap-chasing').textContent = ((united.value-chasingAvg)/chasingAvg*100).toFixed(1)+'%';
+                document.getElementById('big6-ratio-spurs').textContent = (united.value/spurs.value).toFixed(2)+'x';
+            } catch(e) { console.error('Error Big Six:', e); }
+
+            try {
+                posBalanceChart = new Chart(document.getElementById('positionalBalanceChart').getContext('2d'), {
+                    type: 'bar', data: { labels: POSITIONS, datasets: [ { label: '', data: [], backgroundColor: '#4B5563' }, { label: '', data: [], backgroundColor: '#DA291C' } ] },
+                    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { ticks: { callback: (v) => `£${v/1000}k` } } }, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${formatCurrency(c.raw)}` } } } } });
+            } catch(e) { console.error("Error inicializando posBalanceChart:", e); }
+
+            try {
+                playerFlowChart = new Chart(document.getElementById('playerFlowChart').getContext('2d'), {
+                    type: 'bar', data: { labels: POSITIONS, datasets: [ { label: '', data: [], backgroundColor: '#4B5563' }, { label: '', data: [], backgroundColor: '#DA291C' } ] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${c.raw}` } } } } });
+            } catch(e) { console.error("Error inicializando playerFlowChart:", e); }
+            
+
+            try {
+                salaryStructureOutChart = new Chart(document.getElementById('salaryStructureOutChart').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { labels: Object.values(SALARY_TIERS).map(t => t.label), datasets: [{ data: [], backgroundColor: ['#374151', '#6B7280', '#9CA3AF'], borderColor: '#1a1a1a', borderWidth: 2 }] },
+                    options: {
+                        ...doughnutOptions,
+                        plugins: {
+                            ...doughnutOptions.plugins,
+                            legend: { ...doughnutOptions.plugins.legend, labels: { ...doughnutOptions.plugins.legend.labels, color: '#fff' } }
+                        }
+                    },
+                    plugins: [forceLegendWhitePlugin]
+                });
+            } catch(e) { console.error("Error inicializando salaryStructureOutChart:", e); }
+
+            try {
+                salaryStructureInChart = new Chart(document.getElementById('salaryStructureInChart').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { labels: Object.values(SALARY_TIERS).map(t => t.label), datasets: [{ data: [], backgroundColor: ['#DA291C', '#F87171', '#FECACA'], borderColor: '#1a1a1a', borderWidth: 2 }] },
+                    options: {
+                        ...doughnutOptions,
+                        plugins: {
+                            ...doughnutOptions.plugins,
+                            legend: { ...doughnutOptions.plugins.legend, labels: { ...doughnutOptions.plugins.legend.labels, color: '#fff' } }
+                        }
+                    },
+                    plugins: [forceLegendWhitePlugin]
+                });
+            } catch(e) { console.error("Error inicializando salaryStructureInChart:", e); }
+
+            // Cargar datos desde players.json
+            fetch('players.json')
+                .then(response => response.json())
+                .then(data => {
+                    allPlayers = data;
+                    const filterButtons = document.querySelectorAll('.filter-btn');
+                    filterButtons.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            filterButtons.forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                            const filterId = btn.id.replace('btn-', '');
+                            const filter = filterId === 'all' ? 'all' : `${filterId.substring(0, 2)}/${filterId.substring(2)}`; 
+                            updateDashboard(filter);
+                        });
+                    });
+                    // Precargar dominios balance y charts antes de primer render para evitar placeholders
+                    Promise.all([
+                        loadUiDomain('balance', window.currentLang||'es'),
+                        loadUiDomain('charts', window.currentLang||'es'),
+                        loadUiDomain('finanzas', window.currentLang||'es')
+                    ]).finally(()=>{
+                        updateDashboard('all');
+                        applyUiTranslations(window.currentLang);
+                        rebuildChartsForLang(window.currentLang||'es');
+                        ensureBalanceLabels();
+                    });
+                    renderObservaciones(window.currentLang);
+                    renderGlosario(window.currentLang);
+                })
+                .catch(err => {
+                    console.error('Error cargando players.json:', err);
+                    // Opcional: mostrar mensaje de error en la UI
+                });
+
+            // Toggle idioma (persistente)
+            const langBtn = document.getElementById('lang-toggle');
+            const savedLang=localStorage.getItem('mu_lang');
+            if(savedLang && ['es','en'].includes(savedLang)) window.currentLang=savedLang;
+            document.querySelector('#lang-toggle .lang-label').textContent = (window.currentLang||'es').toUpperCase();
+            if(window.currentLang==='en'){
+                applyUiTranslations('en');
+                renderObservaciones('en');
+                renderGlosario('en');
+                // Removed stray updateAnalisis call without metrics (caused undefined errors)
+            }
+            langBtn.addEventListener('click', () => {
+                window.currentLang = window.currentLang === 'es' ? 'en' : 'es';
+                localStorage.setItem('mu_lang', window.currentLang);
+                // Recarga para aplicar todas las traducciones modularizadas sin inconsistencias parciales
+                location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+{
+  "observaciones": [
+    {"cat":"Metodología","text":"Todas las cifras expresadas en salarios semanales brutos (GBP)."},
+    {"cat":"Metodología","text":"No se incluyen bonus variables salvo estimaciones prudentes si alteran la estructura relativa."},
+    {"cat":"Metodología","text":"Cesiones: se prorratea únicamente la parte del salario cubierta por el club de origen cuando procede."},
+    {"cat":"Datos","text":"Fuente base Capology; contrastado con prensa fiable, informes financieros y datos internos."},
+    {"cat":"Alcance","text":"Ciclo analizado: 2024–2026 (ventanas principales) integrando masa heredada inicial."},
+    {"cat":"Posiciones","text":"Agrupación en cuatro líneas: Portería, Defensa, Mediocampo, Delantera; roles híbridos clasificados por función dominante."},
+    {"cat":"Tiers","text":"Élite >£200k; Clave £100k–£200k; Equipo <£100k. Umbrales diseñados para medir concentración y compresión."},
+    {"cat":"Limitaciones","text":"Entradas con salario 'N/A' no impactan totales pero sí volumen operativo."},
+    {"cat":"Conversión","text":"No se convierten cifras a EUR para evitar distorsión cambiaria temporal."},
+    {"cat":"Benchmark","text":"Comparativa Big Six basada en estimaciones homogéneas; diferencias en incentivos pueden ajustar posiciones reales."},
+    {"cat":"Riesgos","text":"Inflación del mercado, renovaciones imprevistas, sustituciones múltiples simultáneas, lesiones estructurales."},
+    {"cat":"Proyección","text":"Escenarios de elasticidad salarial; no constituyen recomendación financiera."},
+    {"cat":"Governanza","text":"El cambio de gobernanza 2024 actúa como punto de corte metodológico."},
+    {"cat":"Seguimiento","text":"Estructura preparada para actualización trimestral y ampliación multi‑idioma."}
+  ]
+}

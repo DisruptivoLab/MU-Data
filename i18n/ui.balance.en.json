@@ -1,0 +1,10 @@
+{
+  "balance": {
+    "title": "General Balance: Savings vs. Investment",
+    "chartCenterLabel": "Net Balance",
+    "kpiAhorro": "Savings from Exits",
+    "kpiGasto": "Wage Cost of Signings",
+    "kpiBalance": "Final Net Balance",
+    "subWeekly": "Weekly"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "observaciones": [
+    {"cat":"Methodology","text":"All figures expressed as gross weekly wages (GBP)."},
+    {"cat":"Methodology","text":"Variable bonuses excluded unless materially reshaping relative structure."},
+    {"cat":"Methodology","text":"Loans: only the portion of wages effectively carried by the parent club is counted as relief."},
+    {"cat":"Data","text":"Primary source Capology; cross‑checked with reputable media, financial filings and internal estimates."},
+    {"cat":"Scope","text":"Cycle covered: 2024–2026 (primary windows) including inherited opening wage base."},
+    {"cat":"Positions","text":"Grouped into GK, Defence, Midfield, Attack; hybrid roles assigned by predominant tactical function."},
+    {"cat":"Tiers","text":"Elite >£200k; Core £100k–£200k; Squad <£100k. Thresholds chosen to evaluate concentration & compression."},
+    {"cat":"Limitations","text":"Entries marked 'N/A' do not affect aggregates yet remain for volume traceability."},
+    {"cat":"FX","text":"No EUR conversion to avoid short‑term exchange rate noise."},
+    {"cat":"Benchmark","text":"Big Six comparison built on harmonised estimates; incentive structures may shift actual order."},
+    {"cat":"Risks","text":"Market inflation, unplanned renewals, simultaneous multi‑role replacements, structural injuries."},
+    {"cat":"Projection","text":"Scenario modelling / wage elasticity – not financial advice."},
+    {"cat":"Governance","text":"2024 governance change is the methodological breakpoint."},
+    {"cat":"Maintenance","text":"Framework prepared for quarterly refresh & multilingual expansion."}
+  ]
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-title>Metodología y Glosario - Dashboard Salarial</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body { background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
+        h1 { font-size: 2rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        p, li { line-height: 1.6; }
+        ul { margin-left: 1.2rem; }
+    a { color: #fff; text-decoration: underline; }
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #fff; background: #222; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; transition: background 0.2s; }
+        .back-link:hover { background: #444; }
+    .bar-flex {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+    .lang-toggle {background:#222;color:#fff;border:1px solid #444;padding:.4rem .9rem;border-radius:.5rem;cursor:pointer;font-size:.85rem}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="bar-flex">
+            <a href="mun-salary.html" class="back-link" data-i18n="back">&larr; Volver al Dashboard</a>
+            <button id="lang-toggle" class="lang-toggle">EN</button>
+        </div>
+        <h1 data-i18n="title">Metodología y Glosario del Dashboard Salarial</h1>
+        <h2 data-i18n="intro.title">1. Introducción y Objetivo del Análisis</h2>
+        <p data-i18n="intro.p1">Este documento detalla la metodología, las fuentes de datos y las definiciones utilizadas para construir el "Análisis de Masa Salarial: La Gestión de INEOS en Manchester United (Desde 2024)". El objetivo del dashboard es proporcionar una visión clara, transparente y basada en datos del impacto financiero de las operaciones de fichajes y salidas en la masa salarial semanal del club durante el período analizado.</p>
+        <h2 data-i18n="method.title">2. Metodología del Análisis (Disclaimers)</h2>
+        <h3 data-i18n="sources.title">2.1. Fuentes de Datos</h3>
+        <ul>
+            <li data-i18n="sources.item1"><strong>Fuente Principal:</strong> La base de los salarios semanales se ha obtenido de <a href="https://www.capology.com/club/manchester-united/salarios" target="_blank" rel="noopener">Capology.com</a>, un recurso público reconocido para la estimación de contratos en el fútbol profesional.</li>
+            <li data-i18n="sources.item2"><strong>Fuente Secundaria:</strong> Los datos han sido ajustados, corregidos y validados con información específica proporcionada por el autor del análisis (@D) para reflejar las condiciones más precisas de los acuerdos, especialmente en lo relativo a nuevos fichajes y cesiones.</li>
+        </ul>
+        <h3 data-i18n="period.title">2.2. Período de Análisis</h3>
+        <p data-i18n="period.p1">El análisis abarca todas las operaciones de mercado (fichajes y salidas) desde el inicio de la gestión deportiva de INEOS a principios de 2024, segmentado en dos períodos fiscales del fútbol:</p>
+        <ul>
+            <li data-i18n="period.item1"><strong>Temporada 24/25:</strong> Verano de 2024 a Invierno de 2025.</li>
+            <li data-i18n="period.item2"><strong>Temporada 25/26:</strong> Verano de 2025 en adelante.</li>
+        </ul>
+        <h3 data-i18n="special.title">2.3. Cálculos Específicos y Casos Especiales</h3>
+        <ul>
+            <li data-i18n="special.item1"><strong>Jadon Sancho:</strong> Se maneja como dos operaciones distintas.<br>
+                <ul>
+                    <li data-i18n="special.item1.sub1">24/25: Préstamo al Chelsea, donde se asume que el club de destino cubre el 100% de la ficha. El ahorro para el United es de £195,000/semana.</li>
+                    <li data-i18n="special.item1.sub2">25/26: Préstamo al Aston Villa, donde cubren el 80% de la ficha. El ahorro para el United es de £156,000/semana.</li>
+                </ul>
+            </li>
+            <li data-i18n="special.item2"><strong>Marcus Rashford y Antony (Préstamos a mitad de temporada):</strong><br>Ambos jugadores son cedidos en enero de 2025, dentro de la temporada 24/25. El United paga su salario durante 7 meses y el club de destino durante 5 meses.<br>El ahorro semanal reflejado en la temporada 24/25 es un promedio ponderado para ese período. Se calcula (Salario Semanal * 5 meses) / 12 meses.<br>Rashford: Ahorro de (£300,000 * 5) / 12 = £125,000/semana.<br>Antony: Ahorro de (£105,000 * 5) / 12 = £43,750/semana.<br>En la temporada 25/26, se contabiliza el ahorro total de sus salarios por sus salidas definitivas.</li>
+            <li data-i18n="special.item3"><strong>Jugadores sin Salario Verificado:</strong><br>Jugadores como S. Lammens, D. León, y H. Mejbri, cuyos salarios no están disponibles públicamente, se incluyen en todas las listas y en los gráficos de "Flujo de Jugadores" para reflejar el movimiento de plantilla.<br>Sin embargo, su impacto salarial se registra como £0 (N/A en las tablas) y no se suman a los totales de ahorro o inversión para no distorsionar las cifras financieras.</li>
+        </ul>
+        <h3 data-i18n="limits.title">2.4. Limitaciones del Análisis</h3>
+        <ul>
+            <li data-i18n="limits.item1">Las cifras presentadas son estimaciones de salarios base semanales brutos y no incluyen bonificaciones por rendimiento, primas de fichaje, derechos de imagen o comisiones de agentes.</li>
+            <li data-i18n="limits.item2">El objetivo es analizar el impacto en la masa salarial recurrente, no el coste total de una operación de traspaso.</li>
+        </ul>
+        <h2 data-i18n="glossary.title">3. Glosario de Términos y Gráficos</h2>
+        <ul>
+            <li data-i18n="glossary.item1"><strong>Ahorro por Salidas:</strong> Suma total de los salarios semanales que el Manchester United deja de pagar por los jugadores que han salido del club (vendidos o cedidos).</li>
+            <li data-i18n="glossary.item2"><strong>Gasto en Fichajes:</strong> Suma total de los salarios semanales de los nuevos jugadores que se han incorporado al club.</li>
+            <li data-i18n="glossary.item3"><strong>Balance Neto Final:</strong> La diferencia entre el "Ahorro por Salidas" y el "Gasto en Fichajes". Un valor positivo (verde) indica un superávit (ahorro neto), mientras que un valor negativo (rojo) indica un déficit (incremento neto del gasto).</li>
+        </ul>
+        <h3 data-i18n="charts.title">3.1. Gráficos</h3>
+        <ul>
+            <li data-i18n="charts.item1"><strong>Balance Salarial por Línea:</strong> Compara el total de salarios ahorrados frente al total de salarios invertidos en cada una de las cuatro posiciones del campo (Portero, Defensa, Medio, Ataque).</li>
+            <li data-i18n="charts.item2"><strong>Flujo de Jugadores:</strong> Muestra el número de jugadores que han salido frente al número de jugadores que han llegado en cada posición.</li>
+            <li data-i18n="charts.item3"><strong>Distribución de Salidas/Fichajes:</strong> Gráficos de torta que desglosan el porcentaje de jugadores que salen o llegan según su rango salarial.</li>
+        </ul>
+        <h3 data-i18n="tiers.title">3.2. Rangos Salariales</h3>
+        <ul>
+            <li data-i18n="tiers.item1"><strong>Élite:</strong> Salario semanal superior a £200,000.</li>
+            <li data-i18n="tiers.item2"><strong>Clave:</strong> Salario semanal entre £100,000 y £200,000.</li>
+            <li data-i18n="tiers.item3"><strong>Equipo:</strong> Salario semanal inferior a £100,000.</li>
+        </ul>
+    </div>
+    <script>
+    (function(){
+        const LS_KEY='mu_lang';
+        const stored=localStorage.getItem(LS_KEY);
+        let lang= (stored==='en' || stored==='es') ? stored : 'es';
+        document.documentElement.lang=lang;
+        const toggle=document.getElementById('lang-toggle');
+        if(toggle){ toggle.textContent = lang==='es' ? 'EN' : 'ES'; }
+
+        async function loadDomain(l){
+            const url=`i18n/method.${l}.json`;
+            if(!window.__METHOD_CACHE) window.__METHOD_CACHE={};
+            if(window.__METHOD_CACHE[l]) return window.__METHOD_CACHE[l];
+            const res= await fetch(url);
+            if(!res.ok) throw new Error('i18n load fail '+url);
+            const data= await res.json();
+            window.__METHOD_CACHE[l]=data; return data;
+        }
+        function apply(data){
+            // Title tag
+            const titleEl=document.querySelector('title[data-i18n-title]');
+            if(titleEl && data.title){ titleEl.textContent=data.title; }
+            document.querySelectorAll('[data-i18n]').forEach(el=>{
+                const key=el.getAttribute('data-i18n');
+                if(key && data[key]) el.innerHTML=data[key];
+            });
+        }
+        loadDomain(lang).then(apply).catch(e=>console.error(e));
+
+        if(toggle){
+            toggle.addEventListener('click',()=>{
+                lang = (lang==='es') ? 'en' : 'es';
+                localStorage.setItem(LS_KEY,lang);
+                document.documentElement.lang=lang;
+                toggle.textContent = lang==='es' ? 'EN' : 'ES';
+                loadDomain(lang).then(apply);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

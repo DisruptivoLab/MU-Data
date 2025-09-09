@@ -1,0 +1,11 @@
+{
+  "charts": {
+    "balance": {
+      "labels": ["Savings Generated", "Signings Wage Spend"],
+      "tooltip": "{label}: {value}"
+    },
+    "evolution": {
+      "datasetLabel": "Weekly Wage Bill"
+    }
+  }
+}

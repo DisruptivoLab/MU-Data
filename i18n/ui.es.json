@@ -1,0 +1,70 @@
+{
+  "nav": {
+    "filtros": "Filtros",
+    "balance": "Balance General",
+  "finanzas": "Finanzas",
+    "evolucion": "Evolución",
+    "big6": "Big Six",
+    "posiciones": "Posiciones",
+    "estructura": "Estructura",
+    "operaciones": "Operaciones",
+    "analisis": "Análisis",
+    "observaciones": "Observaciones",
+  "glosario": "Glosario",
+  "metodologia": "Metodología",
+  "salariosTag": "Salarios"
+  },
+  "sections": {
+    "hero.title": "Análisis de la Masa Salarial Manchester United temporada 24/25 a 25/26",
+  "hero.intro": "Este panel sintetiza la evolución y reestructuración salarial del Manchester United a partir del cambio de gobernanza operativa en 2024. Integra salidas, llegadas y su impacto en la masa semanal, mostrando la transición desde un pico inflacionado hacia un modelo más sostenible sin perder competitividad deportiva. Cada visual refuerza tres preguntas clave: <span class='text-white font-semibold'>¿Cuánto se libera?</span>, <span class='text-white font-semibold'>¿Dónde se reasigna?</span> y <span class='text-white font-semibold'>¿Qué tan eficiente es la nueva estructura?</span>",
+  "hero.filterTitle": "Puedes filtrar por temporada",
+  "hero.filterHint": "Sugerencia: examina primero el modo Total para captar el marco global y luego alterna cada campaña para analizar profundidad y secuencia.",
+    "balance.title": "Balance General: Ahorro vs. Inversión",
+    "evolucion.title": "Evolución de la Masa Salarial Semanal (9 Temporadas)",
+    "big6.title": "Big Six 25/26: Comparativa de Masa Salarial Semanal",
+    "posicion.title": "Análisis por Posición",
+    "estructura.title": "Análisis de Estructura Salarial",
+  "finanzas.title": "Impacto Financiero Anualizado",
+    "operaciones.title": "Detalle de Operaciones",
+    "observaciones.title": "Observaciones Técnicas",
+    "glosario.title": "Glosario"
+  },
+  "footer": {
+    "fuentesTitulo": "Fuentes de Datos:",
+    "fuentesTexto": "Datos salariales obtenidos de <a href=\"https://www.capology.com/club/manchester-united/salarios\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline hover:text-white\">Capology.com</a> y ajustados según investigación adicional.",
+    "creditos": "Creado por <span class=\"mu-red font-semibold\">@D</span> para la <span class=\"font-semibold text-white\">COMUNIDAD DE MANCHESTER UNITED</span>"
+  }
+  ,"filters":{
+    "all":"Total",
+    "24_25":"24/25",
+    "25_26":"25/26"
+  }
+  ,"kpis":{
+    "ahorroPorSalidas":"Ahorro por Salidas",
+    "gastoEnFichajes":"Gasto en Fichajes",
+    "balanceNeto":"Balance Neto Final",
+  "semanales":"Semanales",
+  "balanceLabelPos":"Ahorro Semanal",
+  "balanceLabelNeg":"Incremento Semanal",
+    "ordenSalarioDesc":"Orden: Salario Desc",
+    "ordenSalarioAsc":"Orden: Salario Asc",
+    "exportarCsv":"Exportar CSV",
+    "kpisOperativosNote":"KPIs operativos (se generan dinámicamente según el filtro activo)",
+    "toggleHint":"Toggle invierte orden en ambas tablas; export genera archivo combinado.",
+    "salidasTitulo":"Salidas y Ahorro Generado",
+    "fichajesTitulo":"Fichajes e Inversión",
+    "totalAhorrado":"TOTAL AHORRADO",
+    "totalInvertido":"TOTAL INVERTIDO",
+    "jugador":"Jugador",
+    "ahorroSemanal":"Ahorro Semanal",
+    "salarioSemanal":"Salario Semanal"
+  }
+  ,"kpisOperativos":{
+    "numSalidas":"Nº Salidas",
+    "numFichajes":"Nº Fichajes",
+    "ahorroMedio":"Ahorro Medio",
+    "salarioMedioFichajes":"Salario Medio Fichajes",
+    "ratioAhorroGasto":"Ratio Ahorro / Gasto",
+    "balanceNetoOp":"Balance Neto"
+  }
+}

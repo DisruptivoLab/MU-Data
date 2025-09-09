@@ -1,0 +1,16 @@
+{
+  "evolution": {
+    "title": "Evolución de la Masa Salarial Semanal (9 Temporadas)",
+    "paragraph": "La trayectoria salarial muestra una fase de expansión acelerada entre <strong class='text-white'>{rangeGrowth}</strong> (crecimiento de inversión hasta el <strong class='text-white'>pico {peakValue}</strong> semanales en {peakSeason}) seguida de una contracción estructurada. INEOS hereda en <strong class='text-white'>{season2324} ({val2324})</strong> una masa ya en ajuste y profundiza la racionalización a <strong class='text-white'>{season2425} ({val2425})</strong> y <strong class='text-white'>{season2526} ({val2526})</strong>. El nivel actual es el <strong class='text-white'>{rankStatement}</strong>, y se sitúa un <strong class='mu-green-text'>{dropPct}</strong> por debajo del máximo reciente. Fuente base: {capology}+ estimaciones internas.",
+    "metrics": {
+      "peak": "Pico ({peakSeason})",
+      "current": "Actual ({currentSeason})",
+      "reduction": "Reducción vs Pico",
+      "rank": "Posición Histórica"
+    },
+    "rankStatements": {
+      "secondLowest": "segundo más bajo de las últimas 8 campañas completas"
+    },
+    "sourceCapology": "<a href='https://www.capology.com/club/manchester-united/salarios' target='_blank' rel='noopener' class='underline hover:text-white'>Capology</a> "
+  }
+}

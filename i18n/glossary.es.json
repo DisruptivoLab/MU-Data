@@ -1,0 +1,16 @@
+{
+  "glosario": [
+    {"term":"Ahorro","def":"Reducción de masa salarial semanal asociada a una salida."},
+    {"term":"Inversión","def":"Nueva masa salarial añadida mediante fichajes o renovaciones."},
+    {"term":"Balance Neto","def":"Ahorro menos inversión; positivo implica compresión neta."},
+    {"term":"Redistribución","def":"Reasignación del ahorro hacia otras líneas o tiers."},
+    {"term":"Tier Salarial","def":"Estrato definido para analizar concentración (Élite, Clave, Equipo)."},
+    {"term":"Elasticidad Salarial","def":"Capacidad de ajustar estructura sin deteriorar competitividad deportiva."},
+    {"term":"Masa Salarial Semanal","def":"Suma de salarios base semanales de la plantilla activa."},
+    {"term":"Liberación Neta","def":"Ahorro superior a reinversión dentro de una misma línea."},
+    {"term":"Reinversión Neta","def":"Inversión superior al ahorro en una línea concreta."},
+    {"term":"Colchón Salarial","def":"Margen disponible para operaciones futuras manteniendo disciplina."},
+    {"term":"Compresión","def":"Proceso de aplanar la pirámide salarial reduciendo picos altos."},
+    {"term":"PSR / FFP","def":"Normativas de sostenibilidad financiera de Premier League / UEFA."}
+  ]
+}

@@ -1,0 +1,39 @@
+# Sistema
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs / temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache navegadores / herramientas (por si acaso)
+.cache/
+
+# Entornos
+venv/
+node_modules/
+
+# IDE / Editor
+.vscode/
+*.code-workspace
+
+# MacOS metadata
+._*
+
+# Backups
+*.bak
+*.swp
+*.tmp
+
+# Parcel / Vite / etc (no usamos, preventivo)
+dist/
+build/
+
+# Coverage (si se añaden tests después)
+coverage/
+
+# Mapas fuente (si en el futuro minificas)
+*.map

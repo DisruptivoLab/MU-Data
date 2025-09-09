@@ -1,0 +1,38 @@
+{
+  "posicion": {
+    "title": "Positional Analysis",
+    "intro": "The wage rebalancing leans on <span class='text-white font-medium'>defensive containment</span>, a <span class='text-white font-medium'>midfield optimisation</span>, and an <span class='text-white font-medium'>attacking reconfiguration</span>. The distribution shows where deleveraging concentrates and which lines absorb reinvestment.",
+    "kpis": {
+      "maxRelease": "Line with largest release",
+      "maxNewMass": "Line with largest new mass",
+      "redistributionRatio": "Redistribution Ratio",
+      "deltaDefAtk": "Net Delta DEF vs ATT (k£)"
+    },
+    "positions": ["Goalkeeping","Defence","Midfield","Attack"],
+    "badges": {
+      "reinversion": "Net Reinvestment",
+      "liberacion": "Net Release",
+      "neutro": "Neutral"
+    },
+    "charts": {
+      "balance": {
+  "ahorro": "Weekly Saving",
+  "gasto": "New Weekly Mass",
+  "tooltip": "{label}: {value}",
+  "datasets": { "ahorro": "Saving", "gasto": "New Mass" }
+      },
+      "flow": {
+  "salidas": "Departures (count)",
+  "llegadas": "Arrivals (count)",
+  "tooltip": "{label}: {value} players",
+  "datasets": { "salidas": "Departures", "llegadas": "Arrivals" }
+      },
+      "stack": {
+  "ahorro": "Saving %",
+  "gasto": "New Mass %",
+  "tooltip": "{label}: {value}%",
+  "datasets": { "ahorro": "Saving %", "gasto": "New Mass %" }
+      }
+    }
+  }
+}

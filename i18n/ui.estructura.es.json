@@ -1,0 +1,26 @@
+{
+  "estructura": {
+    "title": "Análisis de Estructura Salarial",
+    "intro": "Segmentación de la masa semanal en tres estratos funcionales. Permite evaluar la compresión del tramo alto, la densidad del núcleo competitivo y la eficiencia del bloque de soporte tras la reestructuración.",
+    "tiers": {
+      "elite": "Élite (>£200k)",
+      "clave": "Clave (£100k-£200k)",
+      "equipo": "Equipo (<£100k)"
+    },
+    "charts": {
+      "out": {
+        "title": "Distribución Salidas por Estrato",
+        "tooltip": "{label}: {value} salidas"
+      },
+      "in": {
+        "title": "Distribución Llegadas por Estrato",
+        "tooltip": "{label}: {value} llegadas"
+      }
+    },
+    "table": {
+      "colTier": "Estrato",
+      "colSalidas": "Salidas",
+      "colLlegadas": "Llegadas"
+    }
+  }
+}

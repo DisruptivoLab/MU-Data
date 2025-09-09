@@ -1,0 +1,35 @@
+{
+  "all": {
+    "title": "Integrated Wage Restructuring Analysis",
+    "intro": "Executive synthesis aggregating every outgoing and incoming operation since the start of the 2024–2026 wage re‑engineering cycle.",
+    "sections": [
+      {"key":"volumen","header":"1. Volume & Flow Direction","tpl":"Recorded: {{countSalidas}} departures and {{countLlegadas}} arrivals. Gross weekly savings reach {{totalAhorro}} versus reinvestment of {{totalGasto}}, producing a net balance of {{balanceFmt}}."},
+      {"key":"mixPos","header":"2. Positional Mix & Redistribution","tpl":"Largest salary release originates in {{posTopRelease}}, while incremental wage allocation concentrates in {{posTopInvest}}. Pattern indicates capital rotation from mature contracts toward creative / attacking value drivers."},
+      {"key":"eficiencia","header":"3. Operational Efficiency","tpl":"Average weekly saving per exit: {{avgAhorro}}; average wage per signing: {{avgGasto}}. The savings / spend relationship holds at {{ratioAG}}, evidencing disciplined entry curve."},
+      {"key":"estructura","header":"4. Wage Tier Structure","tpl":"Compression primarily impacts the Elite layer (>£200k), reducing dependency on inflexible legacy deals. Replenishment skews toward Core & Squad tiers, flattening the distribution and mitigating concentration risk."},
+      {"key":"proyeccion","header":"5. Forward View & Risks","tpl":"If moderated reinvestment persists (positive net ratio), the club preserves headroom for targeted renewals and incentive recalibration. Key risks: market inflation, simultaneous replacement cycles, unforeseen high-impact renewals."}
+    ]
+  },
+  "24/25": {
+    "title": "Season 24/25 Analysis – Sanitation Phase",
+    "intro": "Opening stage: aggressive decompression of inherited wage mass.",
+    "sections": [
+      {"key":"foco","header":"1. Gross Savings & Scope","tpl":"Executed {{countSalidas}} structured exits generating {{totalAhorro}} in weekly relief. Net position: {{balanceFmt}}."},
+      {"key":"pos","header":"2. Positional Distribution","tpl":"Greatest rationalisation impacts {{posTopRelease}}, trimming historical overweight without eroding functional rotation."},
+      {"key":"disciplina","header":"3. Entry Discipline","tpl":"Spread between average saving and average incoming wage: {{avgAhorro}} vs {{avgGasto}} – prevents reconstruction of rigid peaks."},
+      {"key":"riesgos","header":"4. Immediate Risks","tpl":"Primary risk: near-term experience gap if replacement mix over-indexes on projection. Mitigation: staged responsibility ramp + managed minutes."},
+      {"key":"outlook","header":"5. Outlook 25/26","tpl":"With a positive net cushion ({{balanceFmt}}) the following window prioritises calibrated additions (impact profile + contractual sustainability)."}
+    ]
+  },
+  "25/26": {
+    "title": "Season 25/26 Analysis – Controlled Reacceleration",
+    "intro": "Second stage: selective reinvestment leveraging prior cushion.",
+    "sections": [
+      {"key":"mix","header":"1. Signing Profile","tpl":"{{countLlegadas}} arrivals with an average wage of {{avgGasto}} maintain internal tier stratification."},
+      {"key":"sosten","header":"2. Spend Sustainability","tpl":"Cumulative savings / spend ratio at {{ratioAG}} preserves structural headroom."},
+      {"key":"pos","header":"3. Positional Rebalance","tpl":"New wage absorption concentrates in {{posTopInvest}}, consistent with strategy to enhance attacking output and asset value."},
+      {"key":"estructura","header":"4. Contract Layers","tpl":"Reintroduced wage mass does not recreate an oversized >£200k cluster; risk diversified into incentivisable mid‑tiers."},
+      {"key":"proy","header":"5. Next-Window Projection","tpl":"Net position {{balanceFmt}} enables focused investment (hybrid full-back depth, progressive midfielder) while retaining flexibility."}
+    ]
+  }
+}
